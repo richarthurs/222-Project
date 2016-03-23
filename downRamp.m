@@ -9,7 +9,7 @@ global I;
 
 % use the vf array to contain velocity
 syms vout;
-syms omegaOut;
+%syms omegaOut;
 
 vout = vpasolve(mass*0.5*vout^2 == (.5 * mass * velocity(1)^2 + mass*9.81*h), vout);
 
