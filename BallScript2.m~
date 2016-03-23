@@ -6,8 +6,6 @@ g = -9.81
 
 steps = 10;
 
-T = zeros(1:steps)
-
 prevTheta = theta;
 prevAt = 0;
 
@@ -34,11 +32,11 @@ for i = 1:steps
    % Let's find out the time 
    deltaAt(i) = at(i) - prevAt;
    syms t;
-   t = vpasolve(d(i) == (vi*t - 0.8*deltaAt(i)*t^2), t);
+   t(i) = vpasolve(d(i) == vi*t - 0.8*deltaAt(i)*t^2, t);
    T(i) = t(t>0);   % Puts the positive time into T vector
    
    vi = at * T;
    
 end
 
-disp(sum(T));
+disp(sum(T))
