@@ -4,12 +4,12 @@
 % It assumes slipping!
 
 r = 0.07;    % radius of track
-g = -9.8;
+g = 9.8;
 syms x;
-f = -sqrt(r^2 - x^2);  % equation of track from r^2 = x^2 + y^2, solved for y
+f = r^2 - x^2;  % equation of track
 
 %t = (1/sqrt(2*g))* int(sqrt((1 + (diff(f))^2)/(f)),x,0, 0.0699);
-t = (1/sqrt(2*g))* int(sqrt((1 + (diff(f))^2)/(f)),x,0, 0.0699);
+t = (1/sqrt(2*g))* int(sqrt((1 + (diff(f))^2)/(f)),x,0, 0.0);
 
 disp(vpa(t))
 
