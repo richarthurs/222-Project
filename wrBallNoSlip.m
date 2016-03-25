@@ -1,7 +1,3 @@
-% this function uses x and Y coordinates to determine the amount of time a
-% ball took to fall down a ramp described by equation f
-% https://ca.answers.yahoo.com/question/index?qid=20101229213823AAjuJJS
-% It assumes no slipping!
 
 r = 0.07;    % radius of track
 R = 0.01;   % radius of ball
