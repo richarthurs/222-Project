@@ -1,0 +1,14 @@
+function [  ] = SystemInit(  )
+%SYSTEMINIT Summary of this function goes here
+%   Detailed explanation goes here
+
+global g;
+global R;   % Radius of Ball
+global m;   % Mass of Ball
+global I;
+
+g = -9.81;
+I = 0.4 * m * R^2;
+
+end
+

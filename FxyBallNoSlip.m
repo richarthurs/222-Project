@@ -1,38 +1,36 @@
+function [ t ] = FxyBallNoSlip( vi, wi, r )
+%FXYBALLNOSLIP Summary of this function goes here
+%   Detailed explanation goes here
+
+
 % this function uses x and Y coordinates to determine the amount of time a
 % ball took to fall down a ramp described by equation f
-% https://ca.answers.yahoo.com/question/index?qid=20101229213823AAjuJJS
-% It assumes no slipping!
 % Equation explanation: https://ca.answers.yahoo.com/question/index?qid=20101229213823AAjuJJS
 % It assumes no slipping. 
 
-r = 0.07;    % radius of track
-R = 0.005;   % radius of ball
-g = 9.81;    % gravity
-g = -9.81;    % gravity
-R = 0.01;
-m = 0.03;
 
-vi = 0;
-wi = 0;
-I = 0.4 * m * R^2;
+global g;    % gravity
+global R;   % radius of ball
+global m;   % mass of ball
+global I;
 
-syms theta;
-f = r^2 - x^2;  % equation of track
+% These variables are typically presented as arguments to the function. 
+% r = 0.07;    % radius of track
+% vi = 0;   % Initial Velocity
+% wi = 0;   % Initial angular velocity
 
-t =  * int(sqrt(((7/10)*(1+))/()),x,0, 0.068);
-
-
-disp(vpa(t))
 syms x;
+
 f = -sqrt(r^2 - x^2);  % equation of track - a circle solved for y = f(x,r). Negative to agree with gravity. 
 
-t = int(sqrt((7/10)*(1 + diff(f)^2)/(m*g*f + 0.5*m*vi^2 + 0.5*I*wi^2)), x, 0, 0.0699);
+t = int(sqrt(m*(7/10)*(1 + diff(f)^2)/(m*g*f + 0.5*m*vi^2 + 0.5*I*wi^2)), x, 0, 0.0699);
+
+%Old version:
 %t = (1/sqrt((10/7)*g)) * int(sqrt((1 + diff(f)^2)/f), x, 0, 0.0699);    % You can't integrate up to the radius, but you can get close
 t = vpa(t);
 
 fprintf('Time to complete section: ');
 disp(t);
 
-
-
+end
 
