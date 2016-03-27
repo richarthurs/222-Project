@@ -10,7 +10,7 @@ syms theta;
 
 %t = (1/sqrt((10/7)*g)) * int(sqrt((1 + diff(f)^2)/(f)),x,0, 0.068);
 wf = sqrt((0.5*I+0.5*m*R^2)/(m*g*r*sin(theta)));
-t = int(wf,theta,pi,1.5*pi);
+t = int(1/wf,theta,pi,1.5*pi);
 
 disp(vpa(t))
 

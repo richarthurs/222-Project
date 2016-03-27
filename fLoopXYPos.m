@@ -1,13 +1,6 @@
+function [ thetaV ] = fLoopXYPos( xi,yi,vi,wi,thetaStart,thetaEnd,r )
 % This script loops through a range of theta and puts x, y, omega and
-% accelerations into a vector. 
-
-xi = 0.07;
-yi = 0.07;
-vi = 0;
-wi = 0;
-thetaStart = pi;
-thetaEnd = 1.5*pi;
-r = 0.07;   % Radius of track
+% accelerations into a matrix. 
 
 global steps;   % the number of steps to compute in iterative functions
 global I;   % moment of inertia of ball
@@ -17,8 +10,9 @@ global R;   % Radius of Ball
 
 thetaRange = thetaEnd - thetaStart;
 
-% MATRIX LAYOUT: theta, xpos, ypos, ax, ay
-thetaV = zeros(steps:6);    % makes a matrix for the output
+% MATRIX LAYOUT: theta, xpos, ypos, ax, ay, time, w
+thetaV = zeros(steps:6);    % makes a horizontal matrix 
+
 
 rkei = 0.5 * I * wi^2;  % initial rotational kinetic energy
 tkei = 0.5 * m * vi^2;  % initial translational kinetic energy
@@ -50,12 +44,12 @@ for n = 0:steps-1;  % subtract one because of zero indexing
     % from the start of the curve to the current position, but the values
     % do not seem correct. 
     syms thetax;
-   % t = int(sqrt((0.5 * I + 0.5 * m * R^2)/(rkei + gpei - gpeft + tkei)), thetax, thetaStart, theta);
-   FxyBallNoSlip(vi,wi,cos(theta),r); 
-   t = vpa(t);
+    t = int(sqrt((0.5 * I + 0.5 * m * R^2)/(rkei + gpei - gpeft + tkei)), thetax, thetaStart, theta);
+    t = vpa(t);
     t = t - prevTime;
     prevTime = t;
     
+    % Put the values into an output array
     thetaV(n+1, 2) = x;
     thetaV(n+1, 3) = y;
     thetaV(n+1, 4) = ax;
@@ -73,4 +67,5 @@ end
 %plot(thetaV(1:steps, 1), thetaV(1:steps, 5));
 
 
+end
 

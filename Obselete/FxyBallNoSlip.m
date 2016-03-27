@@ -1,4 +1,4 @@
-function [ t ] = FxyBallNoSlip( vi, wi, r )
+function [ t ] = FxyBallNoSlip( vi, wi, Xin, r)
 %FXYBALLNOSLIP Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -23,14 +23,14 @@ syms x;
 
 f = -sqrt(r^2 - x^2);  % equation of track - a circle solved for y = f(x,r). Negative to agree with gravity. 
 
-t = int(sqrt(m*(7/10)*(1 + diff(f)^2)/(m*g*f + 0.5*m*vi^2 + 0.5*I*wi^2)), x, 0, 0.0699);
+t = int(sqrt(m*(7/10)*(1 + diff(f)^2)/(m*g*f + 0.5*m*vi^2 + 0.5*I*wi^2)), x, 0, Xin);
 
 %Old version:
 %t = (1/sqrt((10/7)*g)) * int(sqrt((1 + diff(f)^2)/f), x, 0, 0.0699);    % You can't integrate up to the radius, but you can get close
 t = vpa(t);
 
-fprintf('Time to complete section: ');
-disp(t);
+%fprintf('Time to complete section: ');
+%disp(t);
 
 end
 
