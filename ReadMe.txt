@@ -20,7 +20,7 @@ Currently, fLoopXYPos() is a function designed to handle curves. You pass it ini
 
 It steps through a theta range given and gives out a matrix with acceleration due to gravity, time (doesn’t work) and omega (also doesn’t work). 
 
-I’m not sure why the omega function gives wonky values but I’ll fix it when I have a few hours to work it out. Time isn’t explicitly required in the project, but if the omega function works, time should as well {(dtheta/dt) = omega function}, so flip omega function, multiply by dtheta, integrate with respect to theta, equals the integral of dt = time. I did have a test version of a time function working, so I’ll keep at it. Here’s a thing with similar math laid out, it’s worth a look: https://ca.answers.yahoo.com/question/index?qid=20101229213823AAjuJJS
+I’m not sure why the omega function gives wonky values but I’ll fix it when I have a few hours to work it out. Time isn’t explicitly required in the project, but if the omega function works, time should as well {(dtheta/dt) = omega function}, so flip omega function, multiply by dtheta, integrate with respect to theta, equals the integral of dt = time. I did have a test version of a time function working, so I’ll keep at it. Here’s a thing with similar math laid out, it’s worth a look: https://ca.answers.yahoo.com/question/index?qid=20101229213823AAjuJJS. Here is another good resource: http://www.myphysicslab.com/RollerSimple.html
 
 initSpring() is something I wrote a while ago, not sure how well it matches the current setup.  
 
