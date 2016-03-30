@@ -4,6 +4,12 @@
 clear all;
 fSystemInit; % this sets up globals
 
+% Master matrix of all the data needed
+data = zeros(1,9); % time, pos_x, pos_y, v_x, v_y, omega, a_gx, a_gy, alpha
+
+[F_spring, data] = initSpring(data); % Will update the data matrix with the initial velocity and angular velocity after it is launched from the spring
+% F_spring is the impact force of the spring on the ball, found using conservation of linear momentum
+
 % demo: get the data for a quarter-circle 7cm loop at 7cm, 7cm. 
 % Output MATRIX Columns: theta, xpos, ypos, ax, ay, time, w
 % please note that the time and w are not correct, and ax and ay are also
