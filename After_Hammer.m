@@ -1,33 +1,32 @@
 function [ Master_Array ] = After_Hammer( Master_Array, Max_Theta, Circle_radius )
 
 %Analysis of curve after hammer impact
-%Need to relate time to theta, need to get data and add data to the master
-%Array
 
-%Variables that need to be grabbed from array
-%t from array
-%Start_AngVel grab from array
-%Cur_theta = initial value from array
-%StartPx from array
-%StartPy from array
-
-%Entered data from measurements
-%Max_Theta
-
-global steps;   % the number of steps to compute in iterative functions
+%Define Global variables
 global I;   % moment of inertia of ball
 global m;   % mass of ball
 global g;   % acceleration due to gravity
 global R;   % Radius of Ball
+global t_inc; %increment of t
 
-%Pull data from master array
+%Grabbing data from last row of the master array
+row = size(Master_Array,1);
+StartPx = Master_Array(row, 2);
+StartPy = Master_Array(row, 3);
+Start_AngVel = Master_Array(row, 5);
+Start_t = Master_Array(row, 1);
+t = Start_t + t_inc;   %The first time value to be evaluated
 
-%Need to relate t to theta in some fashion
+%Establishes what the theta value is after one time increment, as we have
+%all the data for the initial theta of 0
+syms Cur_theta;
+Cur_theta = vpasolve(t_inc == int(sqrt((I+m*R^2)/((I+m*R^2)*Start_AngVel^2-2*m*g(Circle_radius-R)*(1-cos(Cur_theta)))), Cur_theta, 0, Cur_theta), Cur_theta);
+
 while(Cur_theta <= Max_Theta)
     %Use energy analysis to determine ang velocity from the initial, under
     %no slip condition
-    Cur_AngVel = sqrt(((I+mR^2)*Start_AngVel^2-2*m*g(Circle_radius-R)(1-cos(Cur_Theta)))/(I+m*R^2));
-    CurPx = StartPx + (Circle_radius-R)*sin(Cur_Theta);
+    Cur_AngVel = sqrt(((I+m*R^2)*Start_AngVel^2-2*m*g(Circle_radius-R)*(1-cos(Cur_theta)))/(I+m*R^2));
+    CurPx = StartPx + (Circle_radius-R)*sin(Cur_theta);
     CurPy = StartPy + (Circle_radius-(Circle_radius-R)*cos(Cur_theta));
     Vx = Cur_AngVel*R*cos(Cur_theta);
     Vy = Cur_AngVel*R*sin(Cur_theta);
@@ -40,9 +39,13 @@ while(Cur_theta <= Max_Theta)
     Norm_Force = -m*ax/sin(Cur_theta);
     
     %Add to master array
-    %Relate theta increase to time 
-end
-
+    New_Data = [t, CurPx, CurPy, Vx, Vy, Cur_AngVel, ax, ay, Cur_AngAcc, Norm_Force];
+    Master_Array = [Master_Array; New_Data];
     
+    %Find the next value of theta for the next increment of time
+    syms Cur_theta;
+    t = t+t_inc;
+    Cur_theta = vpasolve(t-Start_t == int(sqrt((I+m*R^2)/((I+m*R^2)*Start_AngVel^2-2*m*g(Circle_radius-R)*(1-cos(Cur_theta)))), Cur_theta, 0, Cur_theta), Cur_theta);
+end
 end
 
