@@ -1,6 +1,8 @@
 function [F_spring, data_new] = initSpring(data_old)
 % The required global variables are initialized in the fSystemInit function
 
+data_new = data_old;
+
 syms v
 v = vpasolve(v == (k^(1/2)*x)/mass^(1/2),v);
 data_new(1,4) = v; % Updates the data matrix with the initial x velocity. Note that the y velocity remains zero.
