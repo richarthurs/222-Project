@@ -28,6 +28,10 @@ time_range = vpa(time_range);
 
 %time_range = real(time_range);
 disp(time_range)
+
+time_range = int(vpa(sqrt((I+m*R^2)/((I+m*R^2)*Start_AngVel^2+2*m*(-g)(Circle_radius-R)*(1-cos(theta))))), theta, 0, Max_Theta);
+time_range = real(time_range);
+
 iteration_count = (time_range/t_inc);
 theta_increment = round(Max_Theta/iteration_count);
 

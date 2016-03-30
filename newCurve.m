@@ -20,14 +20,23 @@ tkei = 0.5 * I * m * vi^2;  % initial translational KE
 syms theta;
 gpei = @(theta) m * g * (r-R) * sin(theta);  % gravitational potential Energy
 
-syms theta;
 timeFunction = int(vpa(sqrt((0.5 * I+ 0.5 * m * r^2)/(rkei + tkei + gpei(theta)))), theta, thetaStart, thetaEnd);
 timeFunction = real(timeFunction);
 
 disp(timeFunction);
 
-for t = 0:(timeFunction/t_inc):timeFunction
-    
+thetaIntegral = @(theta) real(int(vpa(sqrt((0.5 * I+ 0.5 * m * r^2)/(rkei + tkei + gpei(theta)))), theta, thetaStart, thetaEnd));
+
+thetaGuess = thetaStart;
+counter = 1;
+% for t = 0:(timeFunction/t_inc):timeFunction
+%     syms theta
+%     timeSyncTheta = vpasolve(t == thetaIntegral, theta, thetaGuess);
+%     curveData(counter, 1) = t;
+%     curveData(counter, 2) = timeSyncTheta;
+%     counter = counter + 1;
+%     thetaGuess = timeSyncTheta;
+% end
     
 % all the calculated values are going to go into a temp matrix before being
 % concatenated with the main matrix to avoid over writing data
