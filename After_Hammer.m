@@ -1,17 +1,15 @@
 function [ Master_Array ] = After_Hammer( Master_Array, Max_Theta, Circle_radius )
 
-%Variables
-%t
-%Vx
-%Vy
-%Start_theta
-%Start_AngVel
-%Cur_theta = Start_theta
-%Cur_AngVel = From Array
-%CurPx
-%CurPy
-%StartPx
-%StartPy
+%Analysis of curve after hammer impact
+%Need to relate time to theta, need to get data and add data to the master
+%Array
+
+%Variables that need to be grabbed from array
+%t from array
+%Start_AngVel grab from array
+%Cur_theta = initial value from array
+%StartPx from array
+%StartPy from array
 
 %Entered data from measurements
 %Max_Theta
@@ -33,12 +31,16 @@ while(Cur_theta <= Max_Theta)
     CurPy = StartPy + (Circle_radius-(Circle_radius-R)*cos(Cur_theta));
     Vx = Cur_AngVel*R*cos(Cur_theta);
     Vy = Cur_AngVel*R*sin(Cur_theta);
+    
+    %Used force analysis with no friction to find ang acc and then
+    %tangential and normal acceleration
     Cur_AngAcc = m*g*R*cos(Cur_theta)/(I+m*R^2);
     ax = -Cur_AngAcc*R*cos(Cur_theta)+(Cur_AngVel^2)*R*sin(Cur_theta);
     ay = -Cur_AngAcc*R*sin(Cur_theta)-(Cur_AngVel^2)*R*cos(Cur_theta);
     Norm_Force = -m*ax/sin(Cur_theta);
     
     %Add to master array
+    %Relate theta increase to time 
 end
 
     
