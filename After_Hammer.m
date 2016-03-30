@@ -19,10 +19,13 @@ t = Start_t + t_inc;   %The first time value to be evaluated
 
 %Establishes what the theta value is after one time increment, as we have
 %all the data for the initial theta of 0
-syms Cur_theta;
-Cur_theta = vpasolve(t_inc == int(sqrt((I+m*R^2)/((I+m*R^2)*Start_AngVel^2-2*m*g(Circle_radius-R)*(1-cos(Cur_theta)))), Cur_theta, 0, Cur_theta), Cur_theta);
+theta = 
+time_range = int(vpa(sqrt((I+m*R^2)/((I+m*R^2)*Start_AngVel^2+2*m*g(Circle_radius-R)*(1-cos(theta))))), theta, 0, Max_Theta);
+time_range = real(time_range);
+iteration_count = (time_range/t_inc);
+theta_increment = round(Max_Theta/iteration_count);
 
-while(Cur_theta <= Max_Theta)
+for Cur_theta=theta_increment:theta_increment:Max_Theta
     %Use energy analysis to determine ang velocity from the initial, under
     %no slip condition
     Cur_AngVel = sqrt(((I+m*R^2)*Start_AngVel^2-2*m*g(Circle_radius-R)*(1-cos(Cur_theta)))/(I+m*R^2));
@@ -33,7 +36,7 @@ while(Cur_theta <= Max_Theta)
     
     %Used force analysis with no friction to find ang acc and then
     %tangential and normal acceleration
-    Cur_AngAcc = m*g*R*cos(Cur_theta)/(I+m*R^2);
+    Cur_AngAcc = -m*g*R*cos(Cur_theta)/(I+m*R^2);
     ax = -Cur_AngAcc*R*cos(Cur_theta)+(Cur_AngVel^2)*R*sin(Cur_theta);
     ay = -Cur_AngAcc*R*sin(Cur_theta)-(Cur_AngVel^2)*R*cos(Cur_theta);
     Norm_Force = -m*ax/sin(Cur_theta);
@@ -42,10 +45,7 @@ while(Cur_theta <= Max_Theta)
     New_Data = [t, CurPx, CurPy, Vx, Vy, Cur_AngVel, ax, ay, Cur_AngAcc, Norm_Force];
     Master_Array = [Master_Array; New_Data];
     
-    %Find the next value of theta for the next increment of time
-    syms Cur_theta;
     t = t+t_inc;
-    Cur_theta = vpasolve(t-Start_t == int(sqrt((I+m*R^2)/((I+m*R^2)*Start_AngVel^2-2*m*g(Circle_radius-R)*(1-cos(Cur_theta)))), Cur_theta, 0, Cur_theta), Cur_theta);
 end
 end
 
