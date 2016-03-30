@@ -3,7 +3,7 @@ function [ curveData ] = newCurve(Master_Array, r, thetaStart, thetaEnd )
 %   Detailed explanation goes here
 
 global data;
-global steps;   % the number of steps to compute in iterative functions
+global t_inc;   % the number of steps to compute in iterative functions
 global I;   % moment of inertia of ball
 global m;   % mass of ball
 global g;   % acceleration due to gravity
@@ -25,6 +25,10 @@ timeFunction = int(vpa(sqrt((0.5 * I+ 0.5 * m * r^2)/(rkei + tkei + gpei(theta))
 timeFunction = real(timeFunction);
 
 disp(timeFunction);
+
+for t = 0:(timeFunction/t_inc):timeFunction
+    
+    
 % all the calculated values are going to go into a temp matrix before being
 % concatenated with the main matrix to avoid over writing data
 
