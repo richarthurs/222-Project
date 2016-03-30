@@ -1,5 +1,5 @@
 function [ Master_Array ] = After_Hammer( Master_Array, Max_Theta, Circle_radius )
-
+%Test
 %Analysis of curve after hammer impact
 
 %Define Global variables
