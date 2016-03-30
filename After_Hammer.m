@@ -19,9 +19,15 @@ t = Start_t + t_inc;   %The first time value to be evaluated
 
 %Establishes what the theta value is after one time increment, as we have
 %all the data for the initial theta of 0
-theta = 
-time_range = int(vpa(sqrt((I+m*R^2)/((I+m*R^2)*Start_AngVel^2+2*m*g(Circle_radius-R)*(1-cos(theta))))), theta, 0, Max_Theta);
-time_range = real(time_range);
+syms theta;
+
+
+
+time_range = int(sqrt((I+m*R^2)/((I+m*R^2)*Start_AngVel^2+2*m*g*(Circle_radius-R)*(1-cos(theta)))), theta, 0, Max_Theta);
+time_range = vpa(time_range);
+
+%time_range = real(time_range);
+disp(time_range)
 iteration_count = (time_range/t_inc);
 theta_increment = round(Max_Theta/iteration_count);
 
