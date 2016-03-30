@@ -1,10 +1,5 @@
 function [F_spring, data_new] = initSpring(data_old)
-%declare the global variables that are needed throughout 
-global mass;
-global velocity;
-global impact_time; % Impact time between the spring and the ball
-global s;           % Distance compressed by the spring
-global R;           % Radius of the ball
+% The required global variables are initialized in the fSystemInit function
 
 syms v
 v = vpasolve(v == (k^(1/2)*x)/mass^(1/2),v);
@@ -13,7 +8,7 @@ data_new(1,6) = v./R; % Updates the data matrix with the initial angular velocit
 
 syms F_normal
 
-F_normal = m*g;
+F_normal = m*g; % No acceleration in the y-direction, so the normal force is balanced by the weight.
 
 data_new(1,10) = F_normal; % Adds the initial normal force into the normal force column of the master data matrix.
 
