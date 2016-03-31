@@ -14,7 +14,7 @@ global t_inc; % Time increment
 
 g = -9.81; % In metres/s^2
 R = 0.01; % In metres
-m = 0.03; % In kilograms
+m = 0.016; % In kilograms
 I = 0.4 * m * R^2; % In kilograms * m^2
 steps = 10;
 k = 100; % In Newtons/metre
