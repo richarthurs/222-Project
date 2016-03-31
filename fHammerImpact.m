@@ -3,8 +3,8 @@ function [F_hammer, data_new] = HammerImpact(data_old)
 
 R = 0.01; % 0.01 metres
 g = 9.81; % Global gravity value in fSystemInit is negative...
-mass_hammer = 0.2; %200 grams
-mass_ball = 0.03; %30 grams
+mass_hammer = 0.092; % 92 grams
+mass_ball = 0.016; % 16 grams
 
 h_1 = 0.11; % In metres, the diistance the centre of gravity travels from top to point of impact.
 h_2 = 0.05; % In metres, the height the centre of gravity of the hammer travels after impact.
@@ -48,7 +48,8 @@ wf_hammer = 0; % Angular velocity of the hammer as it rises and comes to rest be
 alpha_1_hammer = (wi_hammer)/0.5; % Angular acceleration of hammer from top to bottom
 alpha_2_hammer = (wf_hammer - w_int_hammer)/0.34; % Angular acceleration of hammer from after impact to top as it follows through
 
-a_1
+a_1 = alpha_1_hammer*d;
+a_2 = alpha_2_hammer*d;
 
 data_new = [data_old; data_new];
  
