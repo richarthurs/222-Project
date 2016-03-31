@@ -25,3 +25,5 @@ Curve1 = fLoopXYPos(0.07,0.07,0,0,pi,1.5*pi,0.07);
 Curve2 = fLoopXYPos(0.02,0.07,0,0,pi,1.5*pi,0.05);
 
 Curve3 = [Curve1; Curve2];   % vertically concatente the matrices
+
+[F_hammer, data] = HammerImpact(data); % Update master array with new velocities after impact, as well as hammer force
