@@ -1,4 +1,4 @@
-function [ Master_Array ] = After_Drop_and_Loop( Master_Array, Incline_Angle, Length )
+function [ Master_Array ] = Downhill_Slope_to_End( Master_Array, Incline_Angle, Length )
 %Test
 %Analysis of curve after hammer impact
 
@@ -34,9 +34,6 @@ while dist_travelled < Length
     
     %Used force analysis with no friction to find ang acc and then
     %tangential and normal acceleration
-    %ax = -Ang_Acc*R*cos(Incline_Angle)+(Cur_AngVel^2)*R*sin(Incline_Angle);
-    %ay = -Ang_Acc*R*sin(Incline_Angle)-(Cur_AngVel^2)*R*cos(Incline_Angle);
-    %Norm_Force = -m*ax/sin(Incline_Angle);
     
     ax = -Ang_Acc*R*cos(Incline_Angle);
     ay = -Ang_Acc*R*sin(Incline_Angle);
