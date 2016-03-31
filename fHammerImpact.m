@@ -37,7 +37,7 @@ data_new(1,10) = F_normal; % Adds the initial normal force into the normal force
 syms F_hammer
 F_hammer = vpasolve(F_hammer == (mass_ball*v_ball/0.00141), F_hammer); % 0.00141 is the estimated impact time in seconds.
 
-wi_hammer = sqrt((2*g*h_1)/(.5r^2+d^2)); % Angular velocity of the hammer right before impact with the ball
+wi_hammer = sqrt((2*g*h_1)/(.5*r^2+d^2)); % Angular velocity of the hammer right before impact with the ball
 w_int_hammer = sqrt(2*g*h_2); % Intermediate angular velocity, right after impact with the ball
 wf_hammer = 0; % Angular velocity of the hammer as it rises and comes to rest before falling down again.
 
