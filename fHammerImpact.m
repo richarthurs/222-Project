@@ -1,12 +1,10 @@
 function [F_hammer, data_new] = HammerImpact(data_old)
 % The required global variables are initialized in the fSystemInit function
 
-global mass_hammer;
-global mass_ball;
-global g;
-global R;
-R = something;
+R = 0.01; %0.01 metres
 g = 9.81; % Global gravity value in fSystemInit is negative...
+mass_hammer = 0.2; %200 grams
+mass_ball = 0.03; %30 grams
 
 h_1 = 0.11; % In metres, the diistance the centre of gravity travels from top to point of impact.
 h_2 = 0.05; % In metres, the height the centre of gravity of the hammer travels after impact.
@@ -18,11 +16,12 @@ r = 0.01; % In metres, the radius of the cylindrical hammer head.
 % Therefore the centre of gravity lies at the centre of gravity of the cylinder shape on the end of the rod.
 % We can then approximate the moment of inertia as that of a cylinder, 0.5mr^2
 
+
 [p, q] = size(data_old);
 data_new = data_old(p,:);
 
 syms v_ball
-v_ball = vpasolve(v_ball == (mass_hammer/mass_ball)*(sqrt(2*g*h_2)-d*sqrt((2*g*h_1)/(.5(r^2) + d^2))),v_ball);
+v_ball = vpasolve(v_ball == (mass_hammer/mass_ball)*(d*sqrt((2*g*h_1)/(.5*r^2 + d^2))-sqrt(2*g*h_2)),v_ball);
 data_new(1,4) = v_ball; % Updates the data matrix with the x velocity. Note that the y velocity remains zero.
 data_new(1,6) = v_ball./R; % Updates the data matrix with the angular velocity. (Rolls without slipping)
 
