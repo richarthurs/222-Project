@@ -1,59 +1,39 @@
-function [F_hammer, data_new] = HammerImpact(data_old)
+function [data_new] = ProjectileMotion(data_old)
 % The required global variables are initialized in the fSystemInit function
 
-R = 0.01; % 0.01 metres
-g = 9.81; % Global gravity value in fSystemInit is negative...
-mass_hammer = 0.092; % 92 grams
-mass_ball = 0.016; % 16 grams
-
-h_1 = 0.11; % In metres, the diistance the centre of gravity travels from top to point of impact.
-h_2 = 0.05; % In metres, the height the centre of gravity of the hammer travels after impact.
-d = 0.055; % In metres, the distance from the centre of gravity of the hammer to the point of rotation.
-r = 0.01; % In metres, the radius of the cylindrical hammer head.
-
-% Note that we are approximating the hammer as a slender rod with no mass with a cylinder on the end.
-% We assumed that the mass of the rod was negligible in comparison to the hammer head and would thus only slightly affect the centre of gravity
-% Therefore the centre of gravity lies at the centre of gravity of the cylinder shape on the end of the rod.
-% We can then approximate the moment of inertia as that of a cylinder, 0.5mr^2
-
+global R; % Radius of ball
+global t_inc;
+t_inc = 0.001;
+R = 0.01;
 
 [p, q] = size(data_old);
-data_new = data_old(p,:);
 
-syms v_ball
-v_ball = vpasolve(v_ball == (mass_hammer/mass_ball)*(d*sqrt((2*g*h_1)/(.5*r^2 + d^2))-sqrt(2*g*h_2)),v_ball);
-data_new(1,4) = v_ball; % Updates the data matrix with the x velocity. Note that the y velocity remains zero.
-data_new(1,6) = v_ball./R; % Updates the data matrix with the angular velocity. (Rolls without slipping)
+x_i = data_old(p,2); % Get the initial x position
+y_i = data_old(p,3); % Get the initial y position
+vx_i = data_old(p,4); % Get the initial x velocity from the master array
+vy_i = data_old(p,5); % Get the initial y velocity from the master array
 
-syms F_normal
+data_current = data_old(p,:);
+data_new = data_old;
 
-F_normal = mass_ball*g; % No acceleration in the y-direction, so the normal force is balanced by the weight.
-
-data_new(1,10) = F_normal; % Adds the initial normal force into the normal force column of the master data matrix.
-
-% Time taken for the hammer to fall from top to bottom is approximately 0.5 seconds
-% Time taken from hammer to go from bottom position to top after hitting the ball is approximately 0.34 seconds
-
-syms F_hammer
-F_hammer = vpasolve(F_hammer == (mass_ball*v_ball/0.00141), F_hammer); % 0.00141 is the estimated impact time in seconds.
-
-wi_hammer = sqrt((2*g*h_1)/(.5r^2+d^2)); % Angular velocity of the hammer right before impact with the ball
-w_int_hammer = sqrt(2*g*h_2); % Intermediate angular velocity, right after impact with the ball
-wf_hammer = 0; % Angular velocity of the hammer as it rises and comes to rest before falling down again.
-
-% Using the kinematic formulas and assuming constant acceleration, the linear and angular accelerations can be found
-% The time intervals have been measured experimentally
-
-% Assuming constant linear and angular acceleration
-alpha_1_hammer = (wi_hammer)/0.5; % Angular acceleration of hammer from top to bottom
-alpha_2_hammer = (wf_hammer - w_int_hammer)/0.34; % Angular acceleration of hammer from after impact to top as it follows through
-
-a_1 = alpha_1_hammer*d;
-a_2 = alpha_2_hammer*d;
-
-data_new = [data_old; data_new];
+for t=t_inc:t_inc:2  % If we start at 0 instead of t_inc, then we'll duplicate the last layer of the master matrix
  
-% Assuming that the frictional force does not affect the acceleration of the ball, it moves at constant velocity.
-% i.e. The linear and angular acceleration remain zero.
+ x = vx_i*t; % Current x position relative to starting position
+ y = t*vy_i - .5*(9.81)*t^2; % Current y position relative to starting position
+ 
+ v_y = vy_i - (9.81)*t; % Current y velocity
+ 
+ data_current(1,1) = data_current(1,1) + t_inc; % Increment the time by t_inc
+ data_current(1,2) = x_i + x; % Update master matrix with absolute x position of the ball
+ data_current(1,3) = y_i + y; % Update master matrix with absolute y position of the ball
+ data_current(1,5) = v_y; % Update the y velocity of the ball, x velocity remains constant
+
+ data_new = [data_new; data_current];
+ 
+ if x == (0.05 - R)
+  break
+ end
+ 
+ end
 
 end
