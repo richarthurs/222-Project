@@ -16,9 +16,22 @@ vy_i = data_old(p,5); % Get the initial y velocity from the master array
 data_current = data_old(p,:);
 data_new = data_old;
 
-for t=t_inc:t_inc:2  % If we start at 0 instead of t_inc, then we'll duplicate the last layer of the master matrix
+for t=t_inc:t_inc:1  % If we start at 0 instead of t_inc, then we'll duplicate the last layer of the master matrix
  
- x = vx_i*t; % Current x position relative to starting position
+    
+ if x < (0.05 - R)
+ % We want to keep incrementing the x values.
+    x = vx_i*t; % Current x position relative to starting position 
+ elseif x >= (0.05 - R)
+     x = 0;
+ elseif y == -0.0633 % When the ball has fallen enough that it has reached the curved landing
+     break
+ end
+ 
+
+     
+    
+
  y = t*vy_i - .5*(9.81)*t^2; % Current y position relative to starting position
  
  v_y = vy_i - (9.81)*t; % Current y velocity
@@ -30,10 +43,23 @@ for t=t_inc:t_inc:2  % If we start at 0 instead of t_inc, then we'll duplicate t
 
  data_new = [data_new; data_current];
  
- if x == (0.05 - R)
+ if x >= (0.05 - R)
+  % If this if-statement executes, we know the ball has hit the wall.
+  % Then, we will consider the ball falling straight vertically downwards,
+  % x position remains constant.
+  x = 0;
   break
  end
  
- end
-
 end
+
+ figure
+plot(data_new(:,2),data_new(:,3)); % Plot x vs y
+figure
+plot(data_new(:,1),data_new(:,5));
+end
+
+
+
+
+
