@@ -3,7 +3,7 @@ function [data_new] = ProjectileMotion(data_old)
 
 global R; % Radius of ball
 global t_inc;
-t_inc = 0.001;
+t_inc = 0.01;
 R = 0.01;
 
 [p, q] = size(data_old);
