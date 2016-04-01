@@ -43,9 +43,12 @@ while dist_travelled < Length
     New_Data = [t, CurPx, CurPy, Vx, Vy, Cur_AngVel, ax, ay, Ang_Acc, Norm_Force];
     Master_Array = [Master_Array; New_Data];
     
+    %Update time travelled and distane travelled
     t = t+t_inc;
     dist_travelled = Start_AngVel*R*(t-Start_t) + 0.5*Ang_Acc*R*(t-Start_t)^2;
 end
+%Add to the array the data of the ball after the collision with the end,
+%resulting in the ball being at rest.
 Last_Data = [t, CurPx, CurPy, 0, 0, 0, 0, 0, 0, m*(-g)*cos(Incline_Angle)];
 Master_Array = [Master_Array; Last_Data];
 end

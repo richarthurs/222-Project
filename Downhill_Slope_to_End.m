@@ -13,8 +13,7 @@ global t_inc; %increment of t
 row = size(Master_Array,1);
 StartPx = Master_Array(row, 2);
 StartPy = Master_Array(row, 3);
-%Start_AngVel = Master_Array(row, 5);
-Start_AngVel = 0;
+Start_AngVel = 0; %Starting from rest
 Start_t = Master_Array(row, 1);
 t = Start_t + t_inc;   %The first time value to be evaluated
 
@@ -44,6 +43,7 @@ while dist_travelled < Length
     New_Data = [t, CurPx, CurPy, Vx, Vy, Cur_AngVel, ax, ay, Ang_Acc, Norm_Force];
     Master_Array = [Master_Array; New_Data];
     
+    %Update total time and distance travelled
     t = t+t_inc;
     dist_travelled = Start_AngVel*R*(t-Start_t) + 0.5*abs(Ang_Acc)*R*(t-Start_t)^2;
 end
