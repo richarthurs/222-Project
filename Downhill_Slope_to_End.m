@@ -13,7 +13,8 @@ global t_inc; %increment of t
 row = size(Master_Array,1);
 StartPx = Master_Array(row, 2);
 StartPy = Master_Array(row, 3);
-Start_AngVel = Master_Array(row, 5);
+%Start_AngVel = Master_Array(row, 5);
+Start_AngVel = 0;
 Start_t = Master_Array(row, 1);
 t = Start_t + t_inc;   %The first time value to be evaluated
 

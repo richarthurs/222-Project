@@ -46,5 +46,7 @@ while dist_travelled < Length
     t = t+t_inc;
     dist_travelled = Start_AngVel*R*(t-Start_t) + 0.5*Ang_Acc*R*(t-Start_t)^2;
 end
+Last_Data = [t, CurPx, CurPy, 0, 0, 0, 0, 0, 0, m*(-g)*cos(Incline_Angle)];
+Master_Array = [Master_Array; Last_Data];
 end
 
