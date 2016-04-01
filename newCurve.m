@@ -60,11 +60,18 @@ for i = 0:(1/t_inc)-1
    curveData(i+1, 4) = (yi + (r-R) * sin(curveData(i+1, 2)));    % y position
    
 % find everything    
-    s = (curveData(i+1, 2) - thetaStart) * (r-R);
-    v = s / curveData(i+1, 1);  % tangential velocity
-    vx = v * sin(curveData(i+1, 2));    
+    w = real(sqrt((rkei + tkei + m*g*(r-R)*curveData(i+1, 4))/(0.5*I + 0.5*m*(R)^2)));
+    curveData(i+1, 5) = w;
+    v = w*R;
+    vx = -v * sin(curveData(i+1, 2));   % note negative sign
     vy = v * cos(curveData(i+1, 2));
-    curveData(i+1, 5) = v / (r-R);  % find omega (w)
+    
+%     s = (curveData(i+1, 2) - thetaStart) * (r-R);
+%     v = s / curveData(i+1, 1);  % tangential velocity
+%     vx = v * sin(curveData(i+1, 2));    
+%     vy = v * cos(curveData(i+1, 2));
+%    % curveData(i+1, 5) = v / (r-R);  % find omega (w)
+   
     curveData(i+1, 6) = vx;     % vx
     curveData(i+1, 7) = vy;     % vy
     curveData(i+1, 10) = v; 
