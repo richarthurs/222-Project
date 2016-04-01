@@ -11,9 +11,15 @@ global R;   % Radius of Ball
 
 %Master_Array = zeros(10,6);
 
+% TODO: Get the initial position out of the array 
+xi = 0;
+yi = 0;
+
 MasterHeight = size(Master_Array, 1);
 vi = sqrt(Master_Array(MasterHeight, 4)^2 + Master_Array(MasterHeight, 5)^2);   % compute the initial velocity
 wi = Master_Array(MasterHeight, 6); % grab the master height
+alphai = 0; % Initial alpha 
+ai = 0; % initial acceleration
 
 rkei = 0.5 * I * wi^2;   % initial rotational KE
 tkei = 0.5 * I * m * vi^2;  % initial translational KE
@@ -44,26 +50,42 @@ for i = 0:(1/t_inc)-1   % starting at zero, go up to 99 (t_inc = 0.01) steps
      prevTheta = thetaVal;  % update the previous theta for speed
      curveData(i+1, 2) = thetaVal;
      %display(i, thetaVal)
-     %display(thetaVal)
+     display(thetaVal)
      plot(curveData(1:100, 1), curveData(1:100, 2))
 end
 
 % have the thetas and times, figure out position! 
-% TODO: ADD INITIAL POSITION!
 for i = 0:(1/t_inc)-1
-   curveData(i+1, 3) = ((r-R) * cos(curveData(i+1, 2)));  % x position
-   curveData(i+1, 4) = ((r-R) * sin(curveData(i+1, 2)));    % y position
+   curveData(i+1, 3) = (xi + (r-R) * cos(curveData(i+1, 2)));  % x position
+   curveData(i+1, 4) = (yi + (r-R) * sin(curveData(i+1, 2)));    % y position
    
-   % w = dtheta/dt -- MEH DOESN'T WORK
-   if i == 0
-       w = wi;
-   else 
-       w = curveData(i, 2) - curveData(i+1, 2) / (curveData(i, 1) - curveData(i+1, 1));
-   end
-   curveData(i+1, 5) = w;
-   
-   % s = theta*r, know delta t
-   
+% find everything    
+    s = (curveData(i+1, 2) - thetaStart) * (r-R);
+    v = s / curveData(i+1, 1);  % tangential velocity
+    vx = v * sin(curveData(i+1, 2));    
+    vy = v * cos(curveData(i+1, 2));
+    curveData(i+1, 5) = v / (r-R);  % find omega (w)
+    curveData(i+1, 6) = vx;     % vx
+    curveData(i+1, 7) = vy;     % vy
+    curveData(i+1, 10) = v; 
+
+% find alpha
+% this makes sense but has approximation errors at the start of the curve
+    if i == 0
+        alpha = alphai;
+    else
+    alpha = alphai + (curveData(i+1,5)-curveData(i,5)/curveData(i+1,1)-curveData(i,1));
+    end
+    curveData(i+1, 8) = alpha;
+    
+    % Find Acceleration
+    if i == 0
+        a = ai;
+    else
+    a = ai + ((sqrt(curveData(i+1,6)^2+curveData(i+1,7)^2)-sqrt(curveData(i,6)^2+curveData(i,7)^2))/(curveData(i+1,1)-curveData(i,1)));
+    curveData(i+1, 9) = a;
+    end
+
 end
     
 
