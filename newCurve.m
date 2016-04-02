@@ -1,4 +1,4 @@
-function [ curveOut ] = newCurve(Master_Array, r, thetaStart, thetaEnd )
+function [ curveOut ] = newCurve(r, thetaStart, thetaEnd )
 %NEWCURVE Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -10,6 +10,9 @@ global g;   % acceleration due to gravity
 global R;   % Radius of Ball
 
 %Master_Array = zeros(10,6);
+
+global trackData;
+global forceData;
 
 % TODO: Get the initial position out of the array 
 xi = 0;

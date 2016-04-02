@@ -21,21 +21,21 @@ t0 = trackData(matrixHeight, 1);
 flatRollKin = zeros(1, 8);
 flatRollForce = zeros(1,3);
 
-t = 0;
 i = 0;
-travelled = vi * t + xi;
 
-while(travelled < distance)
-    flatRollKin(i+1, 2) = travelled;
-    flatRollKin(i+1, 1) = t + t0;
+totalTime = distance / vi;
+
+while(i*t_inc <= totalTime)
+    flatRollKin(i+1, 2) = vi * (t_inc*i);
+    flatRollKin(i+1, 1) = t_inc*i + t0;
     flatRollKin(i+1, 8) = wi;
-    flatRollKin(i+1, 4) = yi;
+    flatRollKin(i+1, 3) = yi;
+    flatRollKin(i+1, 4) = vi;
     
-    flatRollForce(i+1, 1) = t + t0;
+    flatRollForce(i+1, 1) = t_inc*i + t0;
     flatRollForce(i+1, 2) = m * g;
     
     i = i+1;
-    t = t + t_inc;    
 end
 
 end

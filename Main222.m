@@ -25,10 +25,12 @@ springStroke = 0.02;
 trackData = [trackData; springData];
 forceData = [forceData; sforceData];
 
-[flatData, flatForceData] = fFlatRoll(0.04);
+[flatData, flatForceData] = fFlatRoll(0.05);
 trackData = [trackData; flatData];
 forceData = [forceData; flatForceData];
 
+[curve1Data] = curve1(0.03, 0, pi/2);
+trackData = [trackData; curve1Data];
 % F_spring is the impact force of the spring on the ball, found using conservation of linear momentum
 
 
