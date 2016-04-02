@@ -1,8 +1,8 @@
-function [ curveOut ] = newCurve(Master_Array, r, thetaStart, thetaEnd )
+function [ curveData ] = curve1(Master_Array, r, thetaStart, thetaEnd )
 %NEWCURVE Summary of this function goes here
 %   Detailed explanation goes here
 
-global trackData;
+global data;
 global t_inc;   % the number of steps to compute in iterative functions
 global I;   % moment of inertia of ball
 global m;   % mass of ball
@@ -15,8 +15,9 @@ global R;   % Radius of Ball
 xi = 0;
 yi = 0;
 
-vi = 0;   % compute the initial velocity
-wi = 0; % grab the master height
+MasterHeight = size(Master_Array, 1);
+vi = sqrt(Master_Array(MasterHeight, 4)^2 + Master_Array(MasterHeight, 5)^2);   % compute the initial velocity
+wi = Master_Array(MasterHeight, 6); % grab the master height
 alphai = 0; % Initial alpha 
 ai = 0; % initial acceleration
 
@@ -25,13 +26,13 @@ tkei = 0.5 * I * m * vi^2;  % initial translational KE
 syms theta;
 gpei = @(theta) m * g * (r-R) * sin(theta);  % gravitational potential Energy
 
-timeFunction = int(vpa(sqrt((0.5 * I+ 0.5 * m * (r-R)^2)/(rkei + tkei + gpei(theta)))), theta, thetaStart, thetaEnd);
+timeFunction = int(vpa(sqrt((0.5 * I+ 0.5 * m * (r-R)^2)/(rkei + tkei + gpei(theta)))), theta, thetaEnd, thetaStart);
 timeFunction = real(timeFunction);
 
 disp(timeFunction);
 
 syms thetax;
-thetaIntegral = @(thetax) real(int(vpa(sqrt((0.5 * I+ 0.5 * m * (r-R)^2)/(rkei + tkei + gpei(theta)))), theta, thetaStart, thetax));
+thetaIntegral = @(thetax) real(int(vpa(sqrt((0.5 * I+ 0.5 * m * (r-R)^2)/(rkei + tkei + gpei(theta)))), theta, thetaEnd, thetaStart));
 
 curveData = zeros(1/t_inc, 6);  % Pre-allocate space in the curveData array to hold our values
 
@@ -48,8 +49,9 @@ for i = 0:(1/t_inc)-1   % starting at zero, go up to 99 (t_inc = 0.01) steps
      thetaVal = prevTheta + n;  % get the final theta at that time
      prevTheta = thetaVal;  % update the previous theta for speed
      curveData(i+1, 2) = thetaVal;
-     %display(thetaVal)
-     %plot(curveData(1:100, 1), curveData(1:100, 2))
+     %display(i, thetaVal)
+     display(thetaVal)
+     plot(curveData(1:100, 1), curveData(1:100, 2))
 end
 
 % have the thetas and times, figure out position! 
@@ -63,7 +65,13 @@ for i = 0:(1/t_inc)-1
     v = w*R;
     vx = -v * sin(curveData(i+1, 2));   % note negative sign
     vy = v * cos(curveData(i+1, 2));
-  
+    
+%     s = (curveData(i+1, 2) - thetaStart) * (r-R);
+%     v = s / curveData(i+1, 1);  % tangential velocity
+%     vx = v * sin(curveData(i+1, 2));    
+%     vy = v * cos(curveData(i+1, 2));
+%    % curveData(i+1, 5) = v / (r-R);  % find omega (w)
+   
     curveData(i+1, 6) = vx;     % vx
     curveData(i+1, 7) = vy;     % vy
     curveData(i+1, 10) = v; 
@@ -85,22 +93,15 @@ for i = 0:(1/t_inc)-1
     curveData(i+1, 9) = a;
     end
 
-    % The data in the CurveData intermediate matrix is in weird columns,
-    % easiest to sort it out at the end
-
 end
     
-    curveOut = zeros(100,6);
-    for outCount = 1:100
-        curveOut(outCount, 1) = curveData(outCount, 1);
-        curveOut(outCount, 2) = curveData(outCount, 3);
-        curveOut(outCount, 3) = curveData(outCount, 4);
-        curveOut(outCount, 4) = curveData(outCount, 6);
-        curveOut(outCount, 5) = curveData(outCount, 7);
-        curveOut(outCount, 6) = curveData(outCount, 9);
-        curveOut(outCount, 7) = curveData(outCount, 5);
-    end
-    
+
+
+
+% all the calculated values are going to go into a temp matrix before being
+% concatenated with the main matrix to avoid over writing data
+
+
 
 end
 

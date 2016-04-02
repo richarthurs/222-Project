@@ -12,6 +12,8 @@ global impact_time; % Impact time between the spring and the ball
 global s; % Distance compressed by the spring
 global t_inc; % Time increment
 
+global trackData;
+
 g = -9.81; % In metres/s^2
 R = 0.01; % In metres
 m = 0.016; % In kilograms
@@ -21,6 +23,8 @@ k = 100; % In Newtons/metre
 impact_time = 0.00141; % In seconds
 s = 0.05; % In metres
 t_inc = 0.01; % In seconds
+
+trackData = zeros(10,8);
 
 end
 
