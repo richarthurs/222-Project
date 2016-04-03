@@ -7,7 +7,7 @@ global I;   % moment of inertia of ball
 global m;   % mass of ball
 global g;   % acceleration due to gravity
 global R;   % Radius of Ball
-t_inc = 0.1;
+t_inc = 0.2;
 
 global trackData;
 global forceData;
@@ -60,15 +60,15 @@ end
 
 % have the thetas and times, figure out position! 
 for i = 0:(1/t_inc)-1
-   curveData(i+1, 3) = (xi - (r-R) * sin(curveData(i+1, 2) - pi/2));  % x position
-   curveData(i+1, 4) = (yi - (r-R) * cos(curveData(i+1, 2) - pi/2));    % y position
+   curveData(i+1, 3) = (xi + (r-R) * cos(curveData(i+1, 2)));  % x position
+   curveData(i+1, 4) = (-(r-R) + yi + (r-R) * sin(curveData(i+1, 2)));    % y position
    
 % find everything    
     w = real(sqrt((rkei + tkei + m*g*(r-R)*curveData(i+1, 4))/(0.5*I + 0.5*m*(R)^2)));
     curveData(i+1, 5) = w;
     v = w*R;
    
-    vx = v * sin(curveData(i+1, 2));   % nmay need negative
+    vx = -v * sin(curveData(i+1, 2));   % note negative
     vy = v * cos(curveData(i+1, 2));
   
     curveData(i+1, 6) = vx;     % vx

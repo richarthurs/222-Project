@@ -54,7 +54,7 @@ forceData = [forceData; flatForceData1];
 clear flatData;
 clear flatForceData;
 
-[curve3Data, curve3Force] = curve3(0.03, 0.5*pi, pi);
+[curve3Data, curve3Force] = curve3(0.03, pi/2, pi);
 trackData = [trackData; curve3Data];
 forceData = [forceData; curve3Force];
 %clear curve3Data;
