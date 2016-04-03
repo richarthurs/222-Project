@@ -23,9 +23,9 @@ I = 0.4 * m * R^2; % In kilograms * m^2
 k = 100; % In Newtons/metre
 impact_time = 0.00141; % In seconds
 s = 0.05; % In metres
-t_inc = 0.01; % In seconds
+t_inc = 0.01; % In seconds - to see the rolling at the start, you need 0.01 resolution. for testing speed, 0.05 is better
 
-trackData = zeros(1,8);
-forceData = zeros(1, 3);
+trackData = zeros(1,9);
+forceData = zeros(1, 4);
 end
 

@@ -10,8 +10,8 @@ global s;
 global R;
 global impact_time;
 
-forceData = zeros(1, 3);
-springData = zeros(1, 8);
+forceData = zeros(1, 4);
+springData = zeros(1, 9);
 
 syms v
 v = vpasolve(v == (k^(1/2)*x)/m^(1/2),v);

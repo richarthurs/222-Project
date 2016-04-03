@@ -1,4 +1,4 @@
-function [ curveOut ] = curve1(r, thetaStart, thetaEnd )
+function [ curveOut, curveForce ] = curve2(r, thetaStart, thetaEnd )
 %NEWCURVE
 %   This is for the first section of the first curve
 
@@ -7,14 +7,16 @@ global I;   % moment of inertia of ball
 global m;   % mass of ball
 global g;   % acceleration due to gravity
 global R;   % Radius of Ball
-
+t_inc = 0.05;
 
 global trackData;
 global forceData;
 
 matrixHeight = size(trackData,1);
 
-vi = trackData(matrixHeight, 4);
+vi = sqrt(trackData(matrixHeight, 4)^2 + trackData(matrixHeight, 5)^2);
+vix = trackData(matrixHeight, 4);   % initial x velocity
+viy = trackData(matrixHeight, 5)    % initial y velocity
 wi = trackData(matrixHeight, 8);
 xi = trackData(matrixHeight, 2);
 yi = trackData(matrixHeight, 3);
@@ -24,7 +26,7 @@ alphai = 0; % Initial alpha
 ai = 0; % initial acceleration
 
 rkei = 0.5 * I * wi^2;   % initial rotational KE
-tkei = 0.5 * I * m * vi^2;  % initial translational KE
+tkei = 0.5 * m * vi^2;  % initial translational KE
 syms theta;
 gpei = @(theta) m * g * (r-R) * sin(theta);  % gravitational potential Energy
 
@@ -37,6 +39,7 @@ syms thetax;
 thetaIntegral = @(thetax) real(int(vpa(sqrt((0.5 * I+ 0.5 * m * (r-R)^2)/(rkei + tkei + gpei(theta)))), theta, thetaStart, thetax));
 
 curveData = zeros(1/t_inc, 6);  % Pre-allocate space in the curveData array to hold our values
+curveForce = zeros(1/t_inc, 4); % Pre-allocate force matrix
 
 prevTheta = thetaStart;     % Keep track of the previous calculated theta to speed up the iteration
 
@@ -50,21 +53,22 @@ for i = 0:(1/t_inc)-1   % starting at zero, go up to 99 (t_inc = 0.01) steps
      end  
      thetaVal = prevTheta + n;  % get the final theta at that time
      prevTheta = thetaVal;  % update the previous theta for speed
-     curveData(i+1, 2) = thetaEnd - thetaVal;   % need to 
+     curveData(i+1, 2) = thetaVal-pi;   % need to do this in this case only to get the angle correct
      display(thetaVal)
      %plot(curveData(1:100, 1), curveData(1:100, 2))
 end
 
 % have the thetas and times, figure out position! 
 for i = 0:(1/t_inc)-1
-   curveData(i+1, 3) = (xi + (r-R) * sin(curveData(i+1, 2)));  % x position
-   curveData(i+1, 4) = (yi + (r-R) * cos(curveData(i+1, 2)));    % y position
+   curveData(i+1, 3) = (xi -(r-R) + (r-R) * cos(2.5*pi - curveData(i+1, 2)));  % x position
+   curveData(i+1, 4) = (yi + (r-R) * sin(2.5*pi - curveData(i+1, 2)));    % y position
    
 % find everything    
     w = real(sqrt((rkei + tkei + m*g*(r-R)*curveData(i+1, 4))/(0.5*I + 0.5*m*(R)^2)));
     curveData(i+1, 5) = w;
     v = w*R;
-    vx = -v * cos(curveData(i+1, 2));   % note negative sign
+   
+    vx = vix + v * cos(curveData(i+1, 2));   % nmay need negative
     vy = v * sin(curveData(i+1, 2));
   
     curveData(i+1, 6) = vx;     % vx
@@ -86,22 +90,30 @@ for i = 0:(1/t_inc)-1
     else
     a = ai + (curveData(i+1,10)-curveData(i,10)/(curveData(i+1,1)-curveData(i,1)));
     curveData(i+1, 9) = a;
+    curveData(i+1, 11) = a*sin(curveData(i+1, 2));   % ax
+    curveData(i+1, 12)  = a*cos(curveData(i+1, 2)); % ay
     end
 
-    % The data in the CurveData intermediate matrix is in weird columns,
-    % easiest to sort it out at the end
+    %Forces 
+    
+    curveForce(i+1, 1) = curveData(i+1, 1); % time
+    curveForce(i+1, 3) = 0;
+    curveForce(i+1, 4) = (m*curveData(i+1, 10)^2)/(r-R);    % centripetal force
+    curveForce(i+1, 2) = -curveForce(i+1, 4);    % normal force is balanced by centripetal force
 
 end
-    
-    curveOut = zeros(100,6);
-    for outCount = 1:100
+    iterations= 1/t_inc;
+    curveOut = zeros(iterations,9);
+    for outCount = 1:iterations
         curveOut(outCount, 1) = curveData(outCount, 1) +  t0;
-        curveOut(outCount, 2) = curveData(outCount, 3);
-        curveOut(outCount, 3) = curveData(outCount, 4);
-        curveOut(outCount, 4) = curveData(outCount, 6);
-        curveOut(outCount, 5) = curveData(outCount, 7);
-        curveOut(outCount, 6) = curveData(outCount, 9);
-        curveOut(outCount, 7) = curveData(outCount, 5);
+        curveOut(outCount, 2) = curveData(outCount, 3); % x
+        curveOut(outCount, 3) = curveData(outCount, 4); % y
+        curveOut(outCount, 4) = curveData(outCount, 6); % vx
+        curveOut(outCount, 5) = curveData(outCount, 7); % vy
+        curveOut(outCount, 6) = curveData(outCount, 11); % ax
+        curveOut(outCount, 7) = curveData(outCount, 12); % ay
+        curveOut(outCount, 8) = curveData(outCount, 5); % w 
+        curveOut(outCount, 9) = curveData(outCount, 8); % alpha
     end
     
 

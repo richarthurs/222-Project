@@ -1,5 +1,5 @@
 % Once functions for individual features are implemented, run them here. 
-% Bottom left of board is 0,0. 
+% right top of board is 0,0. 
 
 clear all;
 fSystemInit; % this sets up globals
@@ -24,14 +24,36 @@ springStroke = 0.02;
 [sforceData, springData] = initSpring(data, springStroke); % Will update the data matrix with the initial velocity and angular velocity after it is launched from the spring
 trackData = [trackData; springData];
 forceData = [forceData; sforceData];
+clear springData;
+clear sforceData;
 
-[flatData, flatForceData] = fFlatRoll(0.05);
+[flatData, flatForceData1] = fFlatRoll(0.05);
 trackData = [trackData; flatData];
-forceData = [forceData; flatForceData];
+forceData = [forceData; flatForceData1];
+clear flatData;
+clear flatForceData;
 
-[curve1Data] = curve1(0.03, 0, pi/2);
+% first part of first curve
+[curve1Data, curve1Force] = curve1(0.03, 0, pi/2);
 trackData = [trackData; curve1Data];
-% F_spring is the impact force of the spring on the ball, found using conservation of linear momentum
+forceData = [forceData; curve1Force];
+clear curve1Data;
+clear curve1Force;
+
+% second part of first curve
+[curve2Data, curve2Force] = curve2(0.03, 1.5*pi, 2*pi);
+trackData = [trackData; curve2Data];
+forceData = [forceData; curve2Force];
+clear curve1Data;
+clear curve1Force;
+
+% roll back underneath
+[flatData1, flatForceData1] = fFlatRoll(0.05);
+trackData = [trackData; flatData1];
+forceData = [forceData; flatForceData1];
+clear flatData;
+clear flatForceData;
+
 
 
 % demo: get the data for a quarter-circle 7cm loop at 7cm, 7cm. 
