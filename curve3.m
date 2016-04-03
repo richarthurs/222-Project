@@ -7,7 +7,7 @@ global I;   % moment of inertia of ball
 global m;   % mass of ball
 global g;   % acceleration due to gravity
 global R;   % Radius of Ball
-t_inc = 0.05;
+t_inc = 0.1;
 
 global trackData;
 global forceData;
@@ -53,23 +53,23 @@ for i = 0:(1/t_inc)-1   % starting at zero, go up to 99 (t_inc = 0.01) steps
      end  
      thetaVal = prevTheta + n;  % get the final theta at that time
      prevTheta = thetaVal;  % update the previous theta for speed
-     curveData(i+1, 2) = thetaVal-pi;   % need to do this in this case only to get the angle correct
+     curveData(i+1, 2) = thetaVal;  
      display(thetaVal)
      %plot(curveData(1:100, 1), curveData(1:100, 2))
 end
 
 % have the thetas and times, figure out position! 
 for i = 0:(1/t_inc)-1
-   curveData(i+1, 3) = (xi -(r-R) + (r-R) * cos(2.5*pi - curveData(i+1, 2)));  % x position
-   curveData(i+1, 4) = (yi + (r-R) * sin(2.5*pi - curveData(i+1, 2)));    % y position
+   curveData(i+1, 3) = (xi - (r-R) * sin(curveData(i+1, 2) - pi/2));  % x position
+   curveData(i+1, 4) = (yi - (r-R) * cos(curveData(i+1, 2) - pi/2));    % y position
    
 % find everything    
     w = real(sqrt((rkei + tkei + m*g*(r-R)*curveData(i+1, 4))/(0.5*I + 0.5*m*(R)^2)));
     curveData(i+1, 5) = w;
     v = w*R;
    
-    vx = vix + v * cos(curveData(i+1, 2));   % nmay need negative
-    vy = v * sin(curveData(i+1, 2));
+    vx = v * sin(curveData(i+1, 2));   % nmay need negative
+    vy = v * cos(curveData(i+1, 2));
   
     curveData(i+1, 6) = vx;     % vx
     curveData(i+1, 7) = vy;     % vy

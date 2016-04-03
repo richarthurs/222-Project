@@ -44,8 +44,8 @@ clear curve1Force;
 [curve2Data, curve2Force] = curve2(0.03, 1.5*pi, 2*pi);
 trackData = [trackData; curve2Data];
 forceData = [forceData; curve2Force];
-clear curve1Data;
-clear curve1Force;
+clear curve2Data;
+clear curve2Force;
 
 % roll back underneath
 [flatData1, flatForceData1] = fFlatRoll(0.05);
@@ -54,7 +54,11 @@ forceData = [forceData; flatForceData1];
 clear flatData;
 clear flatForceData;
 
-
+[curve3Data, curve3Force] = curve3(0.03, 0.5*pi, pi);
+trackData = [trackData; curve3Data];
+forceData = [forceData; curve3Force];
+%clear curve3Data;
+%clear curve3Force;
 
 % demo: get the data for a quarter-circle 7cm loop at 7cm, 7cm. 
 % Output MATRIX Columns: theta, xpos, ypos, ax, ay, time, w

@@ -7,7 +7,7 @@ global I;   % moment of inertia of ball
 global m;   % mass of ball
 global g;   % acceleration due to gravity
 global R;   % Radius of Ball
-t_inc = 0.05;
+t_inc = 0.2;
 
 global trackData;
 global forceData;
