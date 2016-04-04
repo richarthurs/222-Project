@@ -38,41 +38,40 @@ disp(time_range)
 prevTheta = thetaStart; % keep track of previous theta through the iterations
 
 % calculate values at time increments
-for i = 1:(1/t_inc) % do 100 time steps (at t_inc = 0.01)
+for i = 1:(1/t_inc) % do 100 time step s
     time = time_range*(i*t_inc);
     display(time);
-
-% Assume no slip, do energy analysis    
+    %Use energy analysis to determine ang velocity from the initial, under
+    %no slip condition
+    
     n = 0.01;  % this is a counter to increment theta, the integration limit
-    while time > integral(thetaIntegral, thetaStart, prevTheta + n) % integrate until times match, find theta there
-        n = n + 0.01;   % the theta incremeter
+    while time > integral(thetaIntegral, thetaStart, prevTheta + n)
+        n = n + 0.01;
     end    
     thetaVal = prevTheta + n;  % get the final theta at that time
     display(thetaVal)
     prevTheta = thetaVal;  % update the previous theta for speed
     
-    % Position
     x =(r-R) + xi + (r-R) * cos(thetaVal);
     y = yi + (r-R) * sin(thetaVal);
    
-    % Velocity
     w = real(sqrt((rkei + tkei + m*g*(r-R)*y)/(0.5*I + 0.5*m*(R)^2)));    
     v = w*R;
-    vx = v * sin(thetaVal);   
-    vy = -v * cos(thetaVal);   
+    vx = v * sin(thetaVal);   % nmay need negative
+    vy = -v * cos(thetaVal);   % note negative
 
-    % Use force analysis to get accelerations
+    
+    %Used force analysis with no friction to find ang acc and then
+    %tangential and normal acceleration
     alpha = -m*g*R*cos(thetaVal)/(I+m*R^2);
     ax = -alpha*R*cos(thetaVal)+(w^2)*R*sin(thetaEnd - thetaVal);
     ay = -alpha*R*sin(thetaVal)-(w^2)*R*cos(thetaEnd - thetaVal);
-    
-    % Find forces
-    normalForce = -m*ax/sin(thetaVal);
+    Norm_Force = -m*ax/sin(thetaVal);
     centripetalForce = m * r * w^2;
     
     %Add to master array
     New_Data = [t+time, x, y, vx, vy, ax, ay, w, alpha];
-    newForce = [t+time, normalForce, 0,centripetalForce,0];  % getting the normal force for the force matrix
+    newForce = [t+time, Norm_Force, 0,centripetalForce,0];  % getting the normal force for the force matrix
     trackArray = [trackArray; New_Data];
     forceArray = [forceArray; newForce];
     
