@@ -23,10 +23,9 @@ global springStroke;    % grab the initial displacement of the spring launcher
 [curveTestOut, curveTestForceOut] = verticalDrop2(curveTestOut, curveTestForceOut, 0.046);   % fall vertically
 [curveTestOut, curveTestForceOut] = curve4New(curveTestOut, curveTestForceOut, pi, 1.5*pi, 0.04);   % third curve, right and down
  
-% maybe add horizontal
-[curveTestOut, curveTestForceOut] = curve5(curveTestOut, curveTestForceOut, 0, 0.13);
-[HammerData, HammerForce, curveTestOut, curveTestForceOut] = fHammerImpact(curveTestOut, curveTestForceOut);    % hit with hammer
-[curveTestOut, curveTestForceOut] = After_Hammer(curveTestOut, curveTestForceOut, (77*pi)/180, 0.07);   % up curve after impact
+ [curveTestOut, curveTestForceOut] = curve5(curveTestOut, curveTestForceOut, 0, 0.13);
+ [HammerData, HammerForce, curveTestOut, curveTestForceOut] = fHammerImpact(curveTestOut, curveTestForceOut);    % hit with hammer
+ [curveTestOut, curveTestForceOut] = After_Hammer(curveTestOut, curveTestForceOut, (77*pi)/180, 0.07);   % up curve after impact
 [curveTestOut, curveTestForceOut] = fProjectileMotion(curveTestOut, curveTestForceOut); % projectile motion fall through chute
 [curveTestOut, curveTestForceOut] = verticalDrop2(curveTestOut, curveTestForceOut, 0.037);   % continue falling through chute
 [curveTestOut, curveTestForceOut] = curve6(curveTestOut, curveTestForceOut, 1.5*pi, 5.89, 0.035);    % small left curve after chute
@@ -34,8 +33,16 @@ global springStroke;    % grab the initial displacement of the spring launcher
 [curveTestOut, curveTestForceOut, teeterData] = Rod_Rotation(curveTestOut, curveTestForceOut, 0.25, 0.159, 0.091, 0.02,0.08,-0.3927, 0.3927);    % rotate teeter-totter 
 [curveTestOut, curveTestForceOut] = Downhill_Slope_to_End(curveTestOut, curveTestForceOut, 0.3927, 0.25);  % roll down teeter-totter
 
+cla;
 rows = size(curveTestOut, 1);
 plot(curveTestOut(1:rows, 2), curveTestOut(1:rows, 3)); % grab a quick graph of position 
-figure
-plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 4)); % grab a quick graph of position 
-%comet(curveTestOut(:,2),curveTestOut(:,3))
+axis([-0.05 0.3 -.35 0.05])
+hold on
+pause(5);
+% plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 4)); % grab a quick graph of position 
+% comet(curveTestOut(:,2),curveTestOut(:,3))
+% 
+for n = 1:1:rows-1
+   plot(curveTestOut(n, 2), curveTestOut(n, 3), 'or'); 
+   pause(curveTestOut(n, 1)/100);
+end

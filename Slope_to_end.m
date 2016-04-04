@@ -8,7 +8,7 @@ global m;   % mass of ball
 global g;   % acceleration due to gravity
 global R;   % Radius of Ball
 global t_inc; %increment of t
-
+t_inc = 0.01;
 %Grabbing data from last row of the master array
 row = size(Master_Array,1);
 StartPx = Master_Array(row, 2);

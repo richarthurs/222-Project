@@ -12,7 +12,7 @@ t_inc = 0.01;
 %Grabbing data from last row of the master array
 row = size(Master_Array,1);
 StartPx = Master_Array(row, 2);
-StartPy = Master_Array(row, 3);
+StartPy = Master_Array(row, 3) - R; % need to shift down by the radius
 Start_AngVel = Master_Array(row, 8);
 Start_t = Master_Array(row, 1);
 t = Start_t + t_inc;   %The first time value to be evaluated

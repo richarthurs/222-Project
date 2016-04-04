@@ -6,7 +6,7 @@ global g;   % Gravity
 global R;   % Radius of Ball
 global m;   % Mass of Ball
 global t_inc; % Time increment
-t_inc = 0.005;
+t_inc = 0.001;
 
 
 matrixHeight = size(trackData,1);
