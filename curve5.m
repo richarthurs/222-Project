@@ -1,5 +1,5 @@
 
-function [ Master_Array, forceArray ] = After_Drop_and_Loop( Master_Array, forceArray, Incline_Angle, Length )
+function [ Master_Array, forceArray ] = curve5( Master_Array, forceArray, Incline_Angle, Length )
 %Test
 %Analysis of curve after hammer impact
 

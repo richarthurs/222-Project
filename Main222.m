@@ -85,7 +85,7 @@ springStroke = 0.02;
 %  clear curve4Data;
 %  clear curve4Force;
  
-[curveTestOut, curveTestForceOut] = After_Drop_and_Loop(curveTestOut, curveTestForceOut, 0, 0.05);
+[curveTestOut, curveTestForceOut] = curve5(curveTestOut, curveTestForceOut, 0, 0.05);
 [HammerData, HammerForce, curveTestOut, curveTestForceOut] = fHammerImpact(curveTestOut, curveTestForceOut);
 [curveTestOut, curveTestForceOut] = After_Hammer(curveTestOut, curveTestForceOut, 1.4, 0.09);
 [curveTestOut, curveTestForceOut] = fProjectileMotion(curveTestOut, curveTestForceOut);
