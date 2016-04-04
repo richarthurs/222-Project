@@ -1,17 +1,13 @@
-
 function [ Master_Array, forceArray ] = curve5( Master_Array, forceArray, Incline_Angle, Length )
-%Test
-%Analysis of curve after hammer impact
 
-%Define Global variables
+% Pull in global variables
 global I;   % moment of inertia of ball
 global m;   % mass of ball
 global g;   % acceleration due to gravity
 global R;   % Radius of Ball
 global t_inc; %increment of t
 
-%Grabbing data from last row of the master array
-
+% Get initial conditions from master array
 row = size(Master_Array,1);
 StartPx = Master_Array(row, 2);
 StartPy = Master_Array(row, 3);
@@ -20,10 +16,10 @@ Start_t = Master_Array(row, 1);
 t = Start_t + t_inc;   %The first time value to be evaluated
 
 %Finding constant Angular Acceleration
-Ang_Acc = m*(-g)*R*sin(Incline_Angle)/(I+m*R^2);
+alpha = m*(-g)*R*sin(Incline_Angle)/(I+m*R^2);
 
 %Find d after first t_inc
-dist_travelled = Start_AngVel*R*t_inc + 0.5*Ang_Acc*R*t_inc^2;
+dist_travelled = Start_AngVel*R*t_inc + 0.5*alpha*R*t_inc^2;
 
 while dist_travelled < Length
     %Use energy analysis to determine ang velocity from the initial, under
@@ -37,19 +33,19 @@ while dist_travelled < Length
     %Used force analysis with no friction to find ang acc and then
     %tangential and normal acceleration
     
-    ax = -Ang_Acc*R*cos(Incline_Angle);
-    ay = -Ang_Acc*R*sin(Incline_Angle);
+    ax = -alpha*R*cos(Incline_Angle);
+    ay = -alpha*R*sin(Incline_Angle);
     Norm_Force = -m*ax/sin(Incline_Angle);
     
     %Add to master array
-    New_Data = [t, CurPx, CurPy, Vx, Vy, ax, ay, Cur_AngVel, Ang_Acc];
+    New_Data = [t, CurPx, CurPy, Vx, Vy, ax, ay, Cur_AngVel, alpha];
     newForce = [t, Norm_Force, 0, 0, 0];
     Master_Array = [Master_Array; New_Data];
     forceArray = [forceArray; newForce];
     
     %Update time travelled and distane travelled
     t = t+t_inc;
-    dist_travelled = Start_AngVel*R*(t-Start_t) + 0.5*Ang_Acc*R*(t-Start_t)^2;
+    dist_travelled = Start_AngVel*R*(t-Start_t) + 0.5*alpha*R*(t-Start_t)^2;
 end
 %Add to the array the data of the ball after the collision with the end,
 %resulting in the ball being at rest.
