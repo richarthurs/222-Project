@@ -1,7 +1,7 @@
 % Once functions for individual features are implemented, run them here. 
 % right top of board is 0,0. 
-
 clear all;
+
 fSystemInit; % this sets up globals
 
 global g;   % Gravity
@@ -17,8 +17,12 @@ global t_inc; % Time increment
 global trackData;
 global forceData;
 
+
 % Master matrix of all the data needed
 data = zeros(1,10); % time, pos_x, pos_y, v_x, v_y, omega, a_gx, a_gy, alpha, normal force
+
+% UNCOMMENT STARTING HERE TO GET A FULL SIMULATION
+
 
 springStroke = 0.02;
 [sforceData, springData] = initSpring(data, springStroke); % Will update the data matrix with the initial velocity and angular velocity after it is launched from the spring
@@ -65,6 +69,14 @@ trackData = [trackData; dropData];
 forceData = [forceData; dropForceData];
 clear dropData;
 clear dropForceData;
+
+
+ [curve4Data, curve4Force] = curve4(0.07, pi, 1.5*pi);
+ trackData = [trackData; curve4Data];
+ forceData = [forceData; curve4Force];
+ clear curve4Data;
+ clear curve4Force;
+
 
 %clear curve3Data;
 %clear curve3Force;
