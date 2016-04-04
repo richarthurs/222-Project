@@ -10,7 +10,7 @@ global s;
 global R;
 global impact_time;
 
-forceData = zeros(1, 4);
+forceData = zeros(1, 5);
 springData = zeros(1, 9);
 
 syms v

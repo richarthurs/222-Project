@@ -57,6 +57,15 @@ clear flatForceData;
 [curve3Data, curve3Force] = curve3(0.03, pi/2, pi);
 trackData = [trackData; curve3Data];
 forceData = [forceData; curve3Force];
+clear curve3Data;
+clear curve3Force;
+
+[dropData, dropForceData] = verticalDrop(0.05);
+trackData = [trackData; dropData];
+forceData = [forceData; dropForceData];
+clear dropData;
+clear dropForceData;
+
 %clear curve3Data;
 %clear curve3Force;
 

@@ -20,7 +20,7 @@ yi = trackData(matrixHeight, 3);
 t0 = trackData(matrixHeight, 1);
 
 flatRollKin = zeros(1, 9);
-flatRollForce = zeros(1,4);
+flatRollForce = zeros(1,5);
 
 i = 1;
 

@@ -26,6 +26,6 @@ s = 0.05; % In metres
 t_inc = 0.01; % In seconds - to see the rolling at the start, you need 0.01 resolution. for testing speed, 0.05 is better
 
 trackData = zeros(1,9);
-forceData = zeros(1, 4);
+forceData = zeros(1, 5);
 end
 

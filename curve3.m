@@ -39,7 +39,7 @@ syms thetax;
 thetaIntegral = @(thetax) real(int(vpa(sqrt((0.5 * I+ 0.5 * m * (r-R)^2)/(rkei + tkei + gpei(theta)))), theta, thetaStart, thetax));
 
 curveData = zeros(1/t_inc, 6);  % Pre-allocate space in the curveData array to hold our values
-curveForce = zeros(1/t_inc, 4); % Pre-allocate force matrix
+curveForce = zeros(1/t_inc, 5); % Pre-allocate force matrix
 
 prevTheta = thetaStart;     % Keep track of the previous calculated theta to speed up the iteration
 
