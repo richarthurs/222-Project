@@ -18,14 +18,13 @@ global mass_ball;
 global h;
 global d;
 
-%global trackData;
-%global forceData;
+global springStroke;
+
 
 g = -9.81; % In metres/s^2
 R = 0.01; % In metres
 m = 0.016; % In kilograms
 I = 0.4 * m * R^2; % In kilograms * m^2
-%steps = 10;
 k = 100; % In Newtons/metre
 impact_time = 0.00141; % In seconds
 s = 0.05; % In metres
@@ -37,7 +36,7 @@ mass_ball = 0.016; % 16 grams
 h = 0.05; % In metres, the height the centre of gravity of the hammer travels after impact.
 d = 0.055; % In metres, the distance from the centre of gravity of the hammer to the point of rotation.
 
-%trackData = zeros(1,9);
-%forceData = zeros(1, 5);
+springStroke = 0.02;
+
 end
 
