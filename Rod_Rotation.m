@@ -6,7 +6,7 @@ global m;   % mass of ball
 global g;   % acceleration due to gravity
 global R;   % Radius of Ball
 global t_inc; %increment of t
-
+t_inc = 0.001;
 %Grabbing data from last row of the master array
 row = size(Master_Array,1);
 StartPx = Master_Array(row, 2);
@@ -25,9 +25,9 @@ Ang_Acc = (m*(-g)*L-mass_weight*(-g)*small_length+mass_rod*(-g)*(0.5*Length_of_R
 
 %Find d after first t_inc
 current_theta = abs(Ang_Acc)*0.5*t_inc^2+initial_theta;
-total_theta = final_theta-initial_theta;
 
-while current_theta < total_theta
+
+while current_theta < final_theta
     %Use energy analysis to determine ang velocity from the initial, under
     %no slip condition
     Cur_AngVel = (-m*(-g)*L*(t-Start_t)-mass_weight*(-g)*small_length*(t-Start_t)-mass_rod*(-g)*(t-Start_t)*(0.5*Length_of_Rod-small_length))/(((1/12)*mass_rod*Length_of_Rod^2)+mass_rod*(0.5*Length_of_Rod-small_length)^2);
@@ -35,7 +35,7 @@ while current_theta < total_theta
     %Finding position of the ball, it is split into two seperate cases for
     %the y position, depending on whether theta is below the datum of theta
     %being 0 at the horizontal value.
-    CurPx = StartPx + L*(cos(initial_theta)-cos(current_theta));
+    CurPx = StartPx - L*(cos(current_theta)-cos(initial_theta));
     if current_theta < 0
         CurPy = StartPy+L*(-sin(abs(current_theta))+sin(abs(initial_theta)));
     else

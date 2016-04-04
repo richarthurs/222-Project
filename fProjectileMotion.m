@@ -5,7 +5,7 @@ global R; % Radius of ball
 global t_inc;
 global m;
 global g;
-t_inc = 0.001;
+t_inc = 0.01;
 R = 0.01;
 
 [p, q] = size(data_old);

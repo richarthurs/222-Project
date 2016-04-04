@@ -36,7 +36,7 @@ mass_ball = 0.016; % 16 grams
 h = 0.05; % In metres, the height the centre of gravity of the hammer travels after impact.
 d = 0.055; % In metres, the distance from the centre of gravity of the hammer to the point of rotation.
 
-springStroke = 0.02;
+springStroke = 0.01;
 
 end
 
