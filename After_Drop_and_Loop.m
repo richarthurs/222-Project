@@ -1,4 +1,5 @@
-function [ Master_Array ] = After_Drop_and_Loop( Master_Array, Incline_Angle, Length )
+
+function [ Master_Array, forceArray ] = After_Drop_and_Loop( Master_Array, forceArray, Incline_Angle, Length )
 %Test
 %Analysis of curve after hammer impact
 
@@ -10,10 +11,11 @@ global R;   % Radius of Ball
 global t_inc; %increment of t
 
 %Grabbing data from last row of the master array
+
 row = size(Master_Array,1);
 StartPx = Master_Array(row, 2);
 StartPy = Master_Array(row, 3);
-Start_AngVel = Master_Array(row, 5);
+Start_AngVel = Master_Array(row, 8);
 Start_t = Master_Array(row, 1);
 t = Start_t + t_inc;   %The first time value to be evaluated
 
@@ -27,7 +29,7 @@ while dist_travelled < Length
     %Use energy analysis to determine ang velocity from the initial, under
     %no slip condition
     Cur_AngVel = sqrt(((I+m*R^2)*Start_AngVel^2-2*m*g*dist_travelled*sin(Incline_Angle))/(I+m*R^2));
-    CurPx = StartPx - dist_travelled*cos(Incline_Angle);
+    CurPx = StartPx + dist_travelled*cos(Incline_Angle);
     CurPy = StartPy - dist_travelled*sin(Incline_Angle);
     Vx = -Cur_AngVel*R*cos(Incline_Angle);
     Vy = -Cur_AngVel*R*sin(Incline_Angle);
@@ -40,8 +42,10 @@ while dist_travelled < Length
     Norm_Force = -m*ax/sin(Incline_Angle);
     
     %Add to master array
-    New_Data = [t, CurPx, CurPy, Vx, Vy, Cur_AngVel, ax, ay, Ang_Acc, Norm_Force];
+    New_Data = [t, CurPx, CurPy, Vx, Vy, ax, ay, Cur_AngVel, Ang_Acc];
+    newForce = [t, Norm_Force, 0, 0, 0];
     Master_Array = [Master_Array; New_Data];
+    forceArray = [forceArray; newForce];
     
     %Update time travelled and distane travelled
     t = t+t_inc;
@@ -49,7 +53,9 @@ while dist_travelled < Length
 end
 %Add to the array the data of the ball after the collision with the end,
 %resulting in the ball being at rest.
-Last_Data = [t, CurPx, CurPy, 0, 0, 0, 0, 0, 0, m*(-g)*cos(Incline_Angle)];
+Last_Data = [t, CurPx, CurPy, 0, 0, 0, 0, 0, 0];
+lastForce = [t, m*(-g)*cos(Incline_Angle), 0, 0, 0];
 Master_Array = [Master_Array; Last_Data];
+forceArray = [forceArray; lastForce];
 end
 
