@@ -95,3 +95,5 @@ springStroke = 0.02;
  [curveTestOut, curveTestForceOut, teeterData] = Rod_Rotation(curveTestOut, curveTestForceOut, 0.1, 0.1, 0.05, 0.05,0.1,-pi/5, pi/5); 
  [curveTestOut, curveTestForceOut] = Downhill_Slope_to_End(curveTestOut, curveTestForceOut, pi/5, 0.1);
 
+ rows = size(curveTestOut, 1);
+ plot(curveTestOut(1:rows, 2), curveTestOut(1:rows, 3));
