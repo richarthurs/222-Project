@@ -22,8 +22,16 @@ global t_inc; % Time increment
 data = zeros(1,10); % time, pos_x, pos_y, v_x, v_y, omega, a_gx, a_gy, alpha, normal force
 
 % UNCOMMENT STARTING HERE TO GET A FULL SIMULATION
+springStroke = 0.02;
+[curveTestOut, curveTestForceOut] = initSpringNew(data, springStroke);
+[curveTestOut, curveTestForceOut] = fFlatRollNew(curveTestOut, curveTestForceOut, 0.05);
+[curveTestOut, curveTestForceOut] = curve1New(curveTestOut, curveTestForceOut, 0, pi/2, 0.03);
+[curveTestOut, curveTestForceOut] = curve2New(curveTestOut, curveTestForceOut, 1.5*pi, 2*pi, 0.03);
+[curveTestOut, curveTestForceOut] = fFlatRollNew(curveTestOut, curveTestForceOut, 0.05);
+[curveTestOut, curveTestForceOut] = curve3New(curveTestOut, curveTestForceOut, pi/2, pi, 0.03);
+[curveTestOut, curveTestForceOut] = verticalDrop2(curveTestOut, curveTestForceOut, 0.05);
+[curveTestOut, curveTestForceOut] = curve4New(curveTestOut, curveTestForceOut, pi, 1.5*pi, 0.07);
 
-% 
 % springStroke = 0.02;
 % [sforceData, springData] = initSpring(data, springStroke); % Will update the data matrix with the initial velocity and angular velocity after it is launched from the spring
 % trackData = [trackData; springData];
@@ -77,26 +85,13 @@ data = zeros(1,10); % time, pos_x, pos_y, v_x, v_y, omega, a_gx, a_gy, alpha, no
 %  clear curve4Data;
 %  clear curve4Force;
  
-[trackTemp, forceTemp] = After_Drop_and_Loop(trackData, forceData, 0, 0.05);
-[HammerData, HammerForce, trackTemp, forceTemp] = fHammerImpact(trackTemp, forceTemp);
-[trackTemp, forceTemp] = After_Hammer(trackTemp, forceTemp, 1.4, 0.09);
-[trackTemp, forceTemp] = fProjectileMotion(trackTemp, forceTemp);
-[trackTemp, forceTemp] = verticalDrop2(trackTemp, forceTemp, 0.05);
-[trackTemp, forceTemp] = curve6(trackTemp, forceTemp, 1.5*pi, 2*pi, 0.03);
-[trackTemp, forceTemp] = Slope_to_end(trackTemp, forceTemp, pi/5, 0.1);
-[trackTemp, forceTemp, teeterData] = Rod_Rotation(trackTemp, forceTemp, 0.1, 0.1, 0.05, 0.05,0.1, 
-% demo: get the data for a quarter-circle 7cm loop at 7cm, 7cm. 
-% Output MATRIX Columns: theta, xpos, ypos, ax, ay, time, w
-% please note that the time and w are not correct, and ax and ay are also
-% just based on angle/gravity (I'll fix it though)
-%Curve1 = fLoopXYPos(0.07,0.07,0,0,pi,1.5*pi,0.07);
+[curveTestOut, c] = After_Drop_and_Loop(trackData, forceData, 0, 0.05);
+[HammerData, HammerForce, curveTestOut, forceTemp] = fHammerImpact(curveTestOut, forceTemp);
+[curveTestOut, forceTemp] = After_Hammer(curveTestOut, forceTemp, 1.4, 0.09);
+[curveTestOut, forceTemp] = fProjectileMotion(curveTestOut, forceTemp);
+[curveTestOut, forceTemp] = verticalDrop2(curveTestOut, forceTemp, 0.05);
+[curveTestOut, forceTemp] = curve6(curveTestOut, forceTemp, 1.5*pi, 2*pi, 0.03);
+[curveTestOut, forceTemp] = Slope_to_end(curveTestOut, forceTemp, pi/5, 0.1);
+[curveTestOut, forceTemp, teeterData] = Rod_Rotation(curveTestOut, forceTemp, 0.1, 0.1, 0.05, 0.05,0.1,-pi/5, pi/5); 
+[curveTestOut, forceTemp] = Downhill_Slope_to_End(curveTestOut, forceTemp, pi/5, 0.1);
 
-% Normally you'd pass the appropriate parameters to the next function, like
-% velocities and accelerations. 
-
-% demo: get the data for a quarter-circle 5cm loop at 2cm, 7cm. 
-%Curve2 = fLoopXYPos(0.02,0.07,0,0,pi,1.5*pi,0.05);
-
-%Curve3 = [Curve1; Curve2];   % vertically concatente the matrices
-
-%[F_hammer, data] = HammerImpact(data); % Update master array with new velocities after impact, as well as hammer force
