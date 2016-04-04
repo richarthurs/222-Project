@@ -1,7 +1,7 @@
 function [Hammer_Data, F_hammer, data_new] = HammerImpact(data_old)
 % The required global variables are initialized in the fSystemInit function
 
-global t_inc;
+t_inc = 0.01;
 
 R = 0.01; % 0.01 metres
 g = 9.81; % Global gravity value in fSystemInit is negative...
@@ -76,8 +76,8 @@ for i = t_inc:t_inc:0.34
 
  Current = zeros(1,5);
  Current(1,1) = i + 0.5 + data_old(p,1); % Current time
- Current(1,2) = alpha_2_hammer*i*d; % Current velocity of the hammer centre of gravity
- Current(1,3) = w_int_hammer - alpha_2_hammer*t; % Current angular velocity of the hammer
+ Current(1,2) = w_int_hammer*d + a_2*i; % Current velocity of the hammer centre of gravity
+ Current(1,3) = w_int_hammer + alpha_2_hammer*i; % Current angular velocity of the hammer
  Current(1,4) = a_2; % Constant linear acceleration of the hammer centre of gravity
  Current(1,5) = alpha_2_hammer; % Constant angular acceleration of the hammer
  
