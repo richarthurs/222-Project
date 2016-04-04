@@ -17,7 +17,7 @@ vy_i = data_old(p,5); % Get the initial y velocity from the master array
 
 data_current = data_old(p,:);
 data_new = data_old;
-force_new = forceOld(p,:);
+force_new = forceOld;
 
 %% Constant parameters during the projectile motion
 

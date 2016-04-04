@@ -27,11 +27,11 @@ springStroke = 0.02;
 [curveTestOut, curveTestForceOut] = fFlatRollNew(curveTestOut, curveTestForceOut, 0.05);
 [curveTestOut, curveTestForceOut] = curve1New(curveTestOut, curveTestForceOut, 0, pi/2, 0.03);
 [curveTestOut, curveTestForceOut] = curve2New(curveTestOut, curveTestForceOut, 1.5*pi, 2*pi, 0.03);
-[curveTestOut, curveTestForceOut] = fFlatRollNew(curveTestOut, curveTestForceOut, 0.05);
-[curveTestOut, curveTestForceOut] = curve3New(curveTestOut, curveTestForceOut, pi/2, pi, 0.03);
-[curveTestOut, curveTestForceOut] = verticalDrop2(curveTestOut, curveTestForceOut, 0.05);
-[curveTestOut, curveTestForceOut] = curve4New(curveTestOut, curveTestForceOut, pi, 1.5*pi, 0.07);
-
+ [curveTestOut, curveTestForceOut] = fFlatRollNew(curveTestOut, curveTestForceOut, 0.05);
+ [curveTestOut, curveTestForceOut] = curve3New(curveTestOut, curveTestForceOut, pi/2, pi, 0.03);
+ [curveTestOut, curveTestForceOut] = verticalDrop2(curveTestOut, curveTestForceOut, 0.05);
+ [curveTestOut, curveTestForceOut] = curve4New(curveTestOut, curveTestForceOut, pi, 1.5*pi, 0.07);
+% 
 % springStroke = 0.02;
 % [sforceData, springData] = initSpring(data, springStroke); % Will update the data matrix with the initial velocity and angular velocity after it is launched from the spring
 % trackData = [trackData; springData];
@@ -85,13 +85,13 @@ springStroke = 0.02;
 %  clear curve4Data;
 %  clear curve4Force;
  
-[curveTestOut, curveTestForceOut] = curve5(curveTestOut, curveTestForceOut, 0, 0.05);
-[HammerData, HammerForce, curveTestOut, curveTestForceOut] = fHammerImpact(curveTestOut, curveTestForceOut);
-[curveTestOut, curveTestForceOut] = After_Hammer(curveTestOut, curveTestForceOut, 1.4, 0.09);
-[curveTestOut, curveTestForceOut] = fProjectileMotion(curveTestOut, curveTestForceOut);
-[curveTestOut, curveTestForceOut] = verticalDrop2(curveTestOut, curveTestForceOut, 0.05);
-[curveTestOut, curveTestForceOut] = curve6(curveTestOut, curveTestForceOut, 1.5*pi, 2*pi, 0.03);
-[curveTestOut, curveTestForceOut] = Slope_to_end(curveTestOut, curveTestForceOut, pi/5, 0.1);
-[curveTestOut, curveTestForceOut, teeterData] = Rod_Rotation(curveTestOut, curveTestForceOut, 0.1, 0.1, 0.05, 0.05,0.1,-pi/5, pi/5); 
-[curveTestOut, curveTestForceOut] = Downhill_Slope_to_End(curveTestOut, curveTestForceOut, pi/5, 0.1);
+ [curveTestOut, curveTestForceOut] = curve5(curveTestOut, curveTestForceOut, 0, 0.05);
+ [HammerData, HammerForce, curveTestOut, curveTestForceOut] = fHammerImpact(curveTestOut, curveTestForceOut);
+ [curveTestOut, curveTestForceOut] = After_Hammer(curveTestOut, curveTestForceOut, 1.4, 0.09);
+ [curveTestOut, curveTestForceOut] = fProjectileMotion(curveTestOut, curveTestForceOut);
+ [curveTestOut, curveTestForceOut] = verticalDrop2(curveTestOut, curveTestForceOut, 0.05);
+ [curveTestOut, curveTestForceOut] = curve6(curveTestOut, curveTestForceOut, 1.5*pi, 2*pi, 0.03);
+ [curveTestOut, curveTestForceOut] = Slope_to_end(curveTestOut, curveTestForceOut, pi/5, 0.1);
+ [curveTestOut, curveTestForceOut, teeterData] = Rod_Rotation(curveTestOut, curveTestForceOut, 0.1, 0.1, 0.05, 0.05,0.1,-pi/5, pi/5); 
+ [curveTestOut, curveTestForceOut] = Downhill_Slope_to_End(curveTestOut, curveTestForceOut, pi/5, 0.1);
 
