@@ -43,7 +43,7 @@ while dist_travelled < Length
     New_Data = [t, CurPx, CurPy, Vx, Vy, ax, ay, Cur_AngVel,Ang_Acc];
     newForce = [t, Norm_Force, 0, 0, 0];
     Master_Array = [Master_Array; New_Data];
-    forceData = [forceData; newForce];
+    
     
     %Update total time and distance travelled
     t = t+t_inc;

@@ -47,24 +47,27 @@ display(theta_increment)
 
 prevTheta = 0;
 
-for i = 1:(1/t_inc)
-    time = t + (i*t_inc);
-    Master_Array(i, 1) = time;
+
+for i = 1:(1/t_inc) % do 100 time steps
+    time = time_range*(i*t_inc);
+    
+    New_Data(i, 1) = t + time;
     %Use energy analysis to determine ang velocity from the initial, under
     %no slip condition
     
-    n = 0.0;  % this is a counter to increment theta, the integration limit
-    while t > integral(thingy, 0, prevTheta + n)
+    n = 0.01;  % this is a counter to increment theta, the integration limit
+    while time > integral(thingy, 0, prevTheta + n)
         n = n + 0.01;
     end    
     Cur_theta = prevTheta + n;  % get the final theta at that time
+    display(Cur_theta)
     prevTheta = Cur_theta;  % update the previous theta for speed
     
     Cur_AngVel = (((I+m*R^2)*Start_AngVel^2-2*m*g*(Circle_radius-R)*(1-cos(Cur_theta)))/(I+m*R^2))^0.5;
     CurPx = StartPx + (Circle_radius-R)*sin(Cur_theta);
     CurPy = StartPy + (Circle_radius-(Circle_radius-R)*cos(Cur_theta));
     Vx = Cur_AngVel*R*cos(Cur_theta);
-    Vy = Cur_AngVel*R*sin(Cur_theta);
+    Vy = -Cur_AngVel*R*sin(Cur_theta);
     
     %Used force analysis with no friction to find ang acc and then
     %tangential and normal acceleration
@@ -78,7 +81,7 @@ for i = 1:(1/t_inc)
     New_Data = [t, CurPx, CurPy, Vx, Vy, ax, ay, Cur_AngVel, Cur_AngAcc];
     newForce = [t, Norm_Force, 0,centripetalForce,0];  % getting the normal force for the force matrix
     Master_Array = [Master_Array; New_Data];
-    
+    force_Array = [force_Array; newForce];
     t = t+t_inc;
     
 end

@@ -1,4 +1,4 @@
-function [ Master_Array, Rod_Array ] = Rod_Rotation( Master_Array, Length_of_Rod, L, small_length, mass_rod, mass_weight, initial_theta, final_theta )
+function [ Master_Array, forceData, Rod_Array ] = Rod_Rotation( Master_Array, forceData, Length_of_Rod, L, small_length, mass_rod, mass_weight, initial_theta, final_theta )
 
 %Define Global variables
 global I;   % moment of inertia of ball
@@ -60,7 +60,9 @@ while current_theta < total_theta
     Norm_Force = -m*Ang_Acc*L+m*(-g)*cos(current_theta);
     
     %Add to master array
-    New_Data = [t, CurPx, CurPy, Vx, Vy, 0, ax, ay, 0, Norm_Force];
+    New_Data = [t, CurPx, CurPy, Vx, Vy,ax, ay,0, 0];
+    newForce = [t, Norm_Force, 0, 0, 0];
+    forceData = [forceData; newForce];
     Master_Array = [Master_Array; New_Data];
     
     %Rod Data
@@ -74,8 +76,9 @@ while current_theta < total_theta
     t = t+t_inc;
     current_theta = 0.5*abs(Ang_Acc)*(t-Start_t)^2 + initial_theta;
 end
-Last_Data = [t, CurPx, CurPy, 0, 0, 0, 0, 0, 0, m*(-g)*cos(final_theta)];
+Last_Data = [t, CurPx, CurPy, 0, 0, 0, 0, 0, 0];
+lastForce = [t, m*(-g)*cos(final_theta), 0, 0, 0];
 Master_Array = [Master_Array; Last_Data];
-
+forceData = [forceData; lastForce];
 end
 

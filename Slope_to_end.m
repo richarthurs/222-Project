@@ -1,4 +1,4 @@
-function [ Master_Array ] = Downhill_Slope_to_End( Master_Array, Incline_Angle, Length )
+function [ Master_Array, forceArray ] = Slope_to_end( Master_Array, forceArray, Incline_Angle, Length )
 %Test
 %Analysis of curve after hammer impact
 
@@ -13,7 +13,7 @@ global t_inc; %increment of t
 row = size(Master_Array,1);
 StartPx = Master_Array(row, 2);
 StartPy = Master_Array(row, 3);
-Start_AngVel = Master_Array(row, 5);
+Start_AngVel = Master_Array(row, 8);
 Start_t = Master_Array(row, 1);
 t = Start_t + t_inc;   %The first time value to be evaluated
 
@@ -40,8 +40,10 @@ while dist_travelled < Length
     Norm_Force = -m*ax/sin(Incline_Angle);
     
     %Add to master array
-    New_Data = [t, CurPx, CurPy, Vx, Vy, Cur_AngVel, ax, ay, Ang_Acc, Norm_Force];
+    New_Data = [t, CurPx, CurPy, Vx, Vy, ax, ay, Cur_AngVel, Ang_Acc];
+    newForce = [t, Norm_Force, 0, 0, 0];    % put the time-correlated normal force into the force array
     Master_Array = [Master_Array; New_Data];
+    forceArray = [forceArray; newForce];
     
     t = t+t_inc;
     dist_travelled = Start_AngVel*R*(t-Start_t) + 0.5*Ang_Acc*R*(t-Start_t)^2;

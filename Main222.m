@@ -83,7 +83,9 @@ data = zeros(1,10); % time, pos_x, pos_y, v_x, v_y, omega, a_gx, a_gy, alpha, no
 [trackTemp, forceTemp] = fProjectileMotion(trackTemp, forceTemp);
 [trackTemp, forceTemp] = verticalDrop2(trackTemp, forceTemp, 0.05);
 [trackTemp, forceTemp] = curve6(trackTemp, forceTemp, 1.5*pi, 2*pi, 0.03);
-
+[trackTemp, forceTemp] = Slope_to_end(trackTemp, forceTemp, pi/5, 0.1);
+[trackTemp, forceTemp, teeterData] = Rod_Rotation(trackTemp, forceTemp, 0.1, 0.1, 0.05, 0.05,0.1,-pi/5, pi/5); 
+[trackTemp, forceTemp] = Downhill_Slope_to_End(trackTemp, forceTemp, pi/5, 0.1);
 % demo: get the data for a quarter-circle 7cm loop at 7cm, 7cm. 
 % Output MATRIX Columns: theta, xpos, ypos, ax, ay, time, w
 % please note that the time and w are not correct, and ax and ay are also
