@@ -73,13 +73,13 @@ for i = 1:(1/t_inc) % do 100 time steps (at t_inc = 0.01)
     vx = v * sin(thetaVal);   
     vy = -v * cos(thetaVal);
     
-    alpha = m*g*R*cos(thetaVal)/(I+m*R^2);
+    alpha = -m*g*R*cos(thetaVal)/(I+m*R^2);
     ax = alpha*R*sin(thetaVal)+(w^2)*R*cos(thetaVal); %alpha neg, sin() neg, cos() neg
     ay = -alpha*R*cos(thetaVal)+(w^2)*R*sin(thetaVal); %Harrison
   
     
     % Find forces
-    normalForce = -m*ax/sin(thetaVal);
+     normalForce = -m * r* w^2 + m*g*sin(thetaVal);
     centripetalForce = m * r * w^2;
     
     %Add to master array

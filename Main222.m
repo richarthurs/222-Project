@@ -113,9 +113,9 @@ for n = 1:1:rows-1
     drawnow
    pause((curveTestOut(n+1, 1)-curveTestOut(n, 1)));
 
- 
 end
 
 display('Time to complete track:')
 disp(curveTestOut(rows, 1))
 
+figure;

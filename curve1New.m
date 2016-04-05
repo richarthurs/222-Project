@@ -65,7 +65,7 @@ for i = 1:(1/t_inc) % do 100 time steps (at t_inc = 0.01)
     ay = -alpha*R*cos(thetaEnd - thetaVal)-(w^2)*R*cos(thetaEnd - thetaVal);
     
     % Find the forces
-    normalForce = -m*ax/sin(thetaEnd - thetaVal);
+    normalForce = -m * r* w^2 + m*g*sin(thetaEnd - thetaVal);
     centripetalForce = m * r * w^2;
     
     %Add to master array

@@ -54,9 +54,10 @@ for i = 1:(1/t_inc) % do 100 time steps
     %Used force analysis with no friction to find ang acc and then
     %tangential and normal acceleration
     Cur_AngAcc = -m*g*R*cos(Cur_theta)/(I+m*R^2);
-    ax = -Cur_AngAcc*R*cos(Cur_theta)-(Cur_AngVel^2)*R*sin(Cur_theta);
-    ay = Cur_AngAcc*R*sin(Cur_theta)-(Cur_AngVel^2)*R*cos(Cur_theta);
-    Norm_Force = -m*ax/sin(Cur_theta);
+
+    ax = -Cur_AngAcc*R*cos(Cur_theta)+(Cur_AngVel^2)*R*sin(Cur_theta);
+    ay = -Cur_AngAcc*R*sin(Cur_theta)-(Cur_AngVel^2)*R*cos(Cur_theta);
+    Norm_Force = -m * Circle_radius* Cur_AngVel^2 + m*g*cos(Cur_theta);
     centripetalForce = m * Circle_radius * Cur_AngVel^2;
     
     %Add to master array

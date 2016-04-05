@@ -63,12 +63,12 @@ for i = 1:(1/t_inc) % do 100 time steps (at t_inc = 0.01)
     vy = v * cos(thetaVal);   % note negative
     
     % Force analysis with no friction to find accelerations
-    alpha = m*g*R*cos(thetaVal)/(I+m*R^2); %change sign
+    alpha = -m*g*R*cos(thetaVal)/(I+m*R^2); %change sign
     ax = alpha*R*sin(thetaVal)+(w^2)*R*cos(thetaVal);
     ay = -alpha*R*cos(thetaVal)+(w^2)*R*sin(thetaVal);
     
     % Find Forces
-    normalForce = -m*ax/sin(thetaVal);
+    normalForce = -m * r* w^2 + m*g*sin(thetaVal);
     centripetalForce = m * r * w^2;
     
     %Add to master array
