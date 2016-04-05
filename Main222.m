@@ -37,40 +37,32 @@ global springStroke;    % grab the initial displacement of the spring launcher
 cla;
 figure
 rows = size(curveTestOut, 1);
-<<<<<<< HEAD
- plot(curveTestOut(1:rows, 2), curveTestOut(1:rows, 3)); % grab a quick graph of position 
- axis([-0.05 0.3 -.35 0.1])
- hold on
- pause(5);
- 
-figure
-plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 4)); % grab a quick graph of position 
-xlabel(['Time']);
-ylabel(['X Velocity']);
-hold on
-
-figure 
-plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 5)); % grab a quick graph of position 
-xlabel(['Time']);
-ylabel(['Y Velocity']);
-
-figure 
-plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 6)); % grab a quick graph of position 
-xlabel(['Time']);
-ylabel(['X Acceleration']);
-
-figure 
-plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 7)); % grab a quick graph of position 
-xlabel(['Time']);
-ylabel(['Y Accelereation']);
-
- %comet(curveTestOut(:,2),curveTestOut(:,3))
-% % 
-%  for n = 1:1:rows-1
-%     plot(curveTestOut(n, 2), curveTestOut(n, 3), 'or'); 
-%     pause(curveTestOut(n, 1)/100);
-%  end
-=======
+% <<<<<<< HEAD
+%  plot(curveTestOut(1:rows, 2), curveTestOut(1:rows, 3)); % grab a quick graph of position 
+%  axis([-0.05 0.3 -.35 0.1])
+%  hold on
+%  pause(5);
+%  
+% figure
+% plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 4)); % grab a quick graph of position 
+% xlabel(['Time']);
+% ylabel(['X Velocity']);
+% hold on
+% 
+% figure 
+% plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 5)); % grab a quick graph of position 
+% xlabel(['Time']);
+% ylabel(['Y Velocity']);
+% 
+% figure 
+% plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 6)); % grab a quick graph of position 
+% xlabel(['Time']);
+% ylabel(['X Acceleration']);
+% 
+% figure 
+% plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 7)); % grab a quick graph of position 
+% xlabel(['Time']);
+% ylabel(['Y Accelereation']);
 
 subplot(3,2,1:4)    % make a subplot and put the position in it
 plot(curveTestOut(1:rows, 2), curveTestOut(1:rows,3))
