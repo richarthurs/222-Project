@@ -60,7 +60,7 @@ for i = 1:(1/t_inc) % do 100 time steps (at t_inc = 0.01)
     w = real(sqrt((rkei + tkei + m*g*(r-R)*y)/(0.5*I + 0.5*m*(R)^2)));    
     v = w*R;
     vx = vix - v * cos(thetaVal);  
-    vy = -v * sin(thetaVal);  
+    vy = v * sin(thetaVal);  %fixed sign error as sin is negative
 
     %Used force analysis with no friction to find ang acc and then
     %tangential and normal acceleration

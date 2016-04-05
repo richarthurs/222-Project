@@ -1,4 +1,4 @@
-function [ trackArray, forceArray ] = curve4New( trackArray, forceArray, thetaStart, thetaEnd, r )
+function [ trackArray, forceArray ] = Curve_After_Hammer( trackArray, forceArray, thetaStart, thetaEnd, r )
 
 % Pull in required global variables
 global I;   % moment of inertia of ball
@@ -52,8 +52,8 @@ for i = 1:(1/t_inc) % do 100 time steps (at t_inc = 0.01)
     prevTheta = thetaVal;  % update the previous theta for speed
     
     % Position
-    x =(r-R) + xi + (r-R) * cos(thetaVal);
-    y = yi + (r-R) * sin(thetaVal);
+    x = xi + (r-R) * cos(thetaVal);
+    y = yi + (r-R) * (1 + sin(thetaVal));
    
     % Velocity
     %w = real(sqrt((rkei + tkei + m*g*(r-R)*y)/(0.5*I + 0.5*m*(R)^2)));    

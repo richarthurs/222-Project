@@ -63,9 +63,9 @@ for i = 1:(1/t_inc) % do 100 time steps (at t_inc = 0.01)
     vy = v * cos(thetaVal);   % note negative
     
     % Force analysis with no friction to find accelerations
-    alpha = -m*g*R*cos(thetaVal)/(I+m*R^2);
-    ax = -alpha*R*sin(thetaVal)+(w^2)*R*sin(thetaVal);
-    ay = -alpha*R*cos(thetaVal)-(w^2)*R*cos(thetaVal);
+    alpha = m*g*R*cos(thetaVal)/(I+m*R^2); %change sign
+    ax = alpha*R*sin(thetaVal)+(w^2)*R*cos(thetaVal);
+    ay = -alpha*R*cos(thetaVal)+(w^2)*R*sin(thetaVal);
     
     % Find Forces
     normalForce = -m*ax/sin(thetaVal);

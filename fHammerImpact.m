@@ -6,8 +6,7 @@ global t_inc;
 global R; % 0.01 metres
 g = 9.81; % Global gravity value in fSystemInit is negative...
 global mass_hammer; % 92 grams
-global mass_ball; % 16 grams
-
+global m; % 16 grams
 global h; % In metres, the height the centre of gravity of the hammer travels after impact.
 global d; % In metres, the distance from the centre of gravity of the hammer to the point of rotation.
 r = 0.01; % In metres, the radius of the cylindrical hammer head.
@@ -22,13 +21,13 @@ r = 0.01; % In metres, the radius of the cylindrical hammer head.
 data_new = data_old(p,:);
 
 syms v_ball
-v_ball = vpasolve(v_ball == (mass_hammer/mass_ball)*d*sqrt(2*9.81/(.5*r^2+d^2))*(sqrt(2*d)-sqrt(h)));
+v_ball = vpasolve(v_ball == (mass_hammer/m)*d*sqrt(2*9.81/(.5*r^2+d^2))*(sqrt(2*d)-sqrt(h)));
 data_new(1,4) = v_ball; % Updates the data matrix with the x velocity. Note that the y velocity remains zero.
 data_new(1,8) = v_ball./R; % Updates the data matrix with the angular velocity. (Rolls without slipping)
 
 syms F_normal
 
-F_normal = mass_ball*g; % No acceleration in the y-direction, so the normal force is balanced by the weight.
+F_normal = m*g; % No acceleration in the y-direction, so the normal force is balanced by the weight.
 
 force_new = zeros(1,5);
 force_new(1,2) = F_normal; % Adds the initial normal force into the normal force column of the force matrix
@@ -37,7 +36,10 @@ force_new = [force_old; force_new]; % add the old force data into the output for
 % Time taken from hammer to go from bottom position to top after hitting the ball is approximately 0.34 seconds
 
 syms F_hammer
-F_hammer = vpasolve(F_hammer == (mass_ball*v_ball/0.00141), F_hammer); % 0.00141 is the estimated impact time in seconds.
+F_hammer = vpasolve(F_hammer == (m*v_ball/0.00141), F_hammer); % 0.00141 is the estimated impact time in seconds.
+
+data_new(1,6) = F_hammer/m; % X Acceleration of the ball after impact, from the impulse force of the hammer.
+data_new(1,7) = 0; % No y acceleration.
 
 wi_hammer = sqrt((4*9.81*d)/(.5*r^2+d^2)); % Angular velocity of the hammer right before impact with the ball
 w_int_hammer = sqrt((2*9.81*h)/(0.5*r^2+d^2)); % Intermediate angular velocity, right after impact with the ball
