@@ -30,13 +30,13 @@ impact_time = 0.00141; % In seconds
 s = 0.05; % In metres
 t_inc = 0.01; % In seconds - to see the rolling at the start, you need 0.01 resolution. for testing speed, 0.05 is better
 
-mass_hammer = 0.050; % 92 grams
+mass_hammer = 0.040; % 92 grams
 %mass_ball = 0.016; % 16 grams
 
 h = 0.05; % In metres, the height the centre of gravity of the hammer travels after impact.
 d = 0.055; % In metres, the distance from the centre of gravity of the hammer to the point of rotation.
 
-springStroke = 0.020;
+springStroke = 0.010;
 
 end
 
