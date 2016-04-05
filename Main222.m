@@ -107,3 +107,5 @@ for n = 1:1:rows-1
    display(n);
 end
 
+display('Time to complete track:')
+disp(curveTestOut(rows, 1))
