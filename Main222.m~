@@ -37,17 +37,17 @@ cla;
 figure
 rows = size(curveTestOut, 1);
 
-subplot(3,2,1:4)    % make a subplot and put the position in it
+subplot(3,2,[1:4])
 plot(curveTestOut(1:rows, 2), curveTestOut(1:rows,3))
 grid on
 title('Position of Center of Mass');
 xlabel('Horizontal Position (m)');
 ylabel('Vertical Position (m)');
 hold on
-p1=plot(curveTestOut(1:rows, 2), curveTestOut(1:rows,3),'Marker','o','MarkerFaceColor','r');    % this is the ball that will be animated
-axis([-0.05 0.3 -.35 0.05]) % getting the axes set up 
+p1=plot(curveTestOut(1:rows, 2), curveTestOut(1:rows,3),'Marker','o','MarkerFaceColor','r');
+axis([-0.05 0.3 -.35 0.05])
 
-subplot(3, 2, 5)    % subplot for x velocity
+subplot(3, 2, 5)
 plot(curveTestOut(1:rows, 1), curveTestOut(1:rows,4))
 grid on
 title('X Velocity');
@@ -57,7 +57,7 @@ axis([0 3 -2 3.5])
 hold on
 p2=plot(curveTestOut(1:rows, 1), curveTestOut(1:rows,4),'Marker','o','MarkerFaceColor','r');
 
-subplot(3, 2, 6)    % subplot for y velocity
+subplot(3, 2, 6)
 plot(curveTestOut(1:rows, 1), curveTestOut(1:rows,5))
 grid on
 title('Y Velocity');
@@ -69,13 +69,16 @@ p3=plot(curveTestOut(1:rows, 1), curveTestOut(1:rows,5),'Marker','o','MarkerFace
 hold off
 
 for n = 1:1:rows-1
-    p1.XData = curveTestOut(n, 2);  % update the x and Y data of the p1, p2, p3 plots in the subplot
+    p1.XData = curveTestOut(n, 2);
     p1.YData = curveTestOut(n, 3);
      p2.XData = curveTestOut(n, 1);
     p2.YData = curveTestOut(n, 4);
      p3.XData = curveTestOut(n, 1);
     p3.YData = curveTestOut(n, 5);
     drawnow
+%    plot(curveTestOut(n, 2), curveTestOut(n, 3), 'or');
+%    plot(curveTestOut(n, 1), curveTestOut(n, 4), 'or');
+%    plot(curveTestOut(n, 1), curveTestOut(n, 5), 'or');
    pause((curveTestOut(n+1, 1)-curveTestOut(n, 1))*1.5);
    display(n);
 end
