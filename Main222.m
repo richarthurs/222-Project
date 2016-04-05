@@ -3,6 +3,7 @@
 
 % right top of board is 0,0, units are standard SI unless otherwise noted. 
 clear all;
+close all;
 fSystemInit; % this sets up global variables like ball parameters
 
 zeroData = [0,0,0.0145,0,0,0,0,0,0]; % initial conditions - everything is zero
@@ -28,7 +29,7 @@ global springStroke;    % grab the initial displacement of the spring launcher
  %[curveTestOut, curveTestForceOut] = After_Hammer(curveTestOut, curveTestForceOut, (77*pi)/180, 0.07);   % up curve after impact
 [curveTestOut, curveTestForceOut] = Curve_After_Hammer(curveTestOut, curveTestForceOut, 1.5*pi, 6.056298028, 0.07);   % third curve,
  [curveTestOut, curveTestForceOut] = fProjectileMotion(curveTestOut, curveTestForceOut); % projectile motion fall through chute
-[curveTestOut, curveTestForceOut] = verticalDrop2(curveTestOut, curveTestForceOut, 0.037);   % continue falling through chute
+%[curveTestOut, curveTestForceOut] = verticalDrop2(curveTestOut, curveTestForceOut, 0.037);   % continue falling through chute
 [curveTestOut, curveTestForceOut] = curve6(curveTestOut, curveTestForceOut, 1.5*pi, 5.89, 0.035);    % small left curve after chute
 [curveTestOut, curveTestForceOut] = Slope_to_end(curveTestOut, curveTestForceOut, 0.3927, 0.25);   % down teeter-totter ramp
 [curveTestOut, curveTestForceOut, teeterData] = Rod_Rotation(curveTestOut, curveTestForceOut, 0.25, 0.159, 0.091, 0.02,0.08,-0.3927, 0.3927);    % rotate teeter-totter 

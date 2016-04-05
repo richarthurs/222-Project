@@ -49,7 +49,7 @@ for i = 1:(1/t_inc) % do 100 time steps
     CurPx = StartPx -(Circle_radius-R) + (Circle_radius-R) * cos(1.5*pi - Cur_theta);
     CurPy =   StartPy + (Circle_radius-R) * sin(1.5*pi - Cur_theta);
     Vx = -Cur_AngVel*R*cos(Cur_theta);
-    Vy = -Cur_AngVel*R*sin(Cur_theta);
+    Vy = Cur_AngVel*R*sin(Cur_theta);
     
     %Used force analysis with no friction to find ang acc and then
     %tangential and normal acceleration
