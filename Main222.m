@@ -34,7 +34,7 @@ global springStroke;    % grab the initial displacement of the spring launcher
 [curveTestOut, curveTestForceOut, teeterData] = Rod_Rotation(curveTestOut, curveTestForceOut, 0.25, 0.159, 0.091, 0.02,0.08,-0.3927, 0.3927);    % rotate teeter-totter 
 [curveTestOut, curveTestForceOut] = Downhill_Slope_to_End(curveTestOut, curveTestForceOut, 0.3927, 0.25);  % roll down teeter-totter
 
-cla;
+close all;
 figure
 rows = size(curveTestOut, 1);
 % <<<<<<< HEAD

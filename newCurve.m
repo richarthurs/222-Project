@@ -102,6 +102,7 @@ end
         curveOut(outCount, 5) = curveData(outCount, 7);
         curveOut(outCount, 6) = curveData(outCount, 9);
         curveOut(outCount, 7) = curveData(outCount, 5);
+        curveOut(outCount, 7) = curveData(outCount, 8);
     end
     
 
