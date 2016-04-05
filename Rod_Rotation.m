@@ -20,9 +20,10 @@ Rod_Array = [Start_t, 0, 0, 0, 0, 0, 0];
 
 t = Start_t + t_inc;   %The first time value to be evaluated
 
+I_A = ((1/12)*mass_rod*Length_of_Rod^2)+mass_rod*(0.5*Length_of_Rod-small_length)^2;
 %Finding constant Angular Acceleration
-Ang_Acc = (m*(-g)*L-mass_weight*(-g)*small_length+mass_rod*(-g)*(0.5*Length_of_Rod-small_length))/(((1/12)*mass_rod*Length_of_Rod^2)+mass_rod*(0.5*Length_of_Rod-small_length)^2);
-
+%Ang_Acc = (m*(-g)*L-mass_weight*(-g)*small_length+mass_rod*(-g)*(0.5*Length_of_Rod-small_length))/(((1/12)*mass_rod*Length_of_Rod^2)+mass_rod*(0.5*Length_of_Rod-small_length)^2);
+Ang_Acc = (m*(-g)*L*cos(initial_theta)+mass_rod*(-g)*(0.5*Length_of_Rod-small_length)*cos(initial_theta)-mass_weight*(-g)*small_length*cos(initial_theta))/I_A;
 %Find d after first t_inc
 current_theta = abs(Ang_Acc)*0.5*t_inc^2+initial_theta;
 
@@ -30,8 +31,8 @@ current_theta = abs(Ang_Acc)*0.5*t_inc^2+initial_theta;
 while current_theta < final_theta
     %Use energy analysis to determine ang velocity from the initial, under
     %no slip condition
-    Cur_AngVel = (-m*(-g)*L*(t-Start_t)-mass_weight*(-g)*small_length*(t-Start_t)-mass_rod*(-g)*(t-Start_t)*(0.5*Length_of_Rod-small_length))/(((1/12)*mass_rod*Length_of_Rod^2)+mass_rod*(0.5*Length_of_Rod-small_length)^2);
-    
+    Cur_AngVel = -(-m*(-g)*L*(t-Start_t)+mass_weight*(-g)*small_length*(t-Start_t)-mass_rod*(-g)*(t-Start_t)*(0.5*Length_of_Rod-small_length))/(((1/12)*mass_rod*Length_of_Rod^2)+mass_rod*(0.5*Length_of_Rod-small_length)^2);
+    Cur_AngAcc = (m*(-g)*L*cos(current_theta)+mass_rod*(-g)*(0.5*Length_of_Rod-small_length)*cos(current_theta)-mass_weight*(-g)*small_length*cos(current_theta))/I_A;
     %Finding position of the ball, it is split into two seperate cases for
     %the y position, depending on whether theta is below the datum of theta
     %being 0 at the horizontal value.
@@ -52,12 +53,12 @@ while current_theta < final_theta
     
     %These values of acceleration seem odd since the acceleration is
     %large. This results in the normal force being large as well.
-    ax = -Ang_Acc*L*sin(current_theta)+(Cur_AngVel^2)*L*cos(current_theta);
-    ay = -Ang_Acc*L*cos(current_theta)-(Cur_AngVel^2)*L*sin(current_theta);
+    ax = -Cur_AngAcc*L*sin(current_theta)+(Cur_AngVel^2)*L*cos(current_theta);
+    ay = -Cur_AngAcc*L*cos(current_theta)-(Cur_AngVel^2)*L*sin(current_theta);
     
     %ax = -Ang_Acc*L*sin(current_theta);
     %ay = -Ang_Acc*L*cos(current_theta);
-    Norm_Force = -m*Ang_Acc*L+m*(-g)*cos(current_theta);
+    Norm_Force = -m*Cur_AngAcc*L+m*(-g)*cos(current_theta);
     
     %Add to master array
     New_Data = [t, CurPx, CurPy, Vx, Vy,ax, ay,0, 0];
@@ -71,7 +72,7 @@ while current_theta < final_theta
     Rod_agx = -Ang_Acc*(0.5*Length_of_Rod-small_length)*sin(current_theta)+(Cur_AngVel^2)*(0.5*Length_of_Rod-small_length)*cos(current_theta);
     Rod_agy = -Ang_Acc*(0.5*Length_of_Rod-small_length)*cos(current_theta)-(Cur_AngVel^2)*(0.5*Length_of_Rod-small_length)*sin(current_theta);
     
-    Rod_Data = [t, Rod_vgx, Rod_vgy, Cur_AngVel, Rod_agx, Rod_agy, Ang_Acc];
+    Rod_Data = [t, Rod_vgx, Rod_vgy, Cur_AngVel, Rod_agx, Rod_agy, Cur_AngAcc];
     Rod_Array = [Rod_Array; Rod_Data];
     t = t+t_inc;
     current_theta = 0.5*abs(Ang_Acc)*(t-Start_t)^2 + initial_theta;

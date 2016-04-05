@@ -42,27 +42,32 @@ rows = size(curveTestOut, 1);
 %  axis([-0.05 0.3 -.35 0.1])
 %  hold on
 %  pause(5);
-%  
-% figure
-% plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 4)); % grab a quick graph of position 
-% xlabel(['Time']);
-% ylabel(['X Velocity']);
-% hold on
-% 
-% figure 
-% plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 5)); % grab a quick graph of position 
-% xlabel(['Time']);
-% ylabel(['Y Velocity']);
-% 
-% figure 
-% plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 6)); % grab a quick graph of position 
-% xlabel(['Time']);
-% ylabel(['X Acceleration']);
-% 
-% figure 
-% plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 7)); % grab a quick graph of position 
-% xlabel(['Time']);
-% ylabel(['Y Accelereation']);
+ 
+figure
+plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 4)); % grab a quick graph of position 
+xlabel(['Time']);
+ylabel(['X Velocity']);
+hold on
+
+figure 
+plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 5)); % grab a quick graph of position 
+xlabel(['Time']);
+ylabel(['Y Velocity']);
+
+figure 
+plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 6)); % grab a quick graph of position 
+xlabel(['Time']);
+ylabel(['X Acceleration']);
+
+figure 
+plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 7)); % grab a quick graph of position 
+xlabel(['Time']);
+ylabel(['Y Accelereation']);
+
+figure 
+plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 7)); % grab a quick graph of position 
+xlabel(['Time']);
+ylabel(['Y Accelereation']);
 
 subplot(3,2,1:4)    % make a subplot and put the position in it
 plot(curveTestOut(1:rows, 2), curveTestOut(1:rows,3))
@@ -103,8 +108,8 @@ for n = 1:1:rows-1
      p3.XData = curveTestOut(n, 1);
     p3.YData = curveTestOut(n, 5);
     drawnow
-   pause((curveTestOut(n+1, 1)-curveTestOut(n, 1))*1.5);
-   display(n);
+   pause((curveTestOut(n+1, 1)-curveTestOut(n, 1)));
+   %display(n);
 end
 
 display('Time to complete track:')
