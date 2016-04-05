@@ -16,6 +16,7 @@ wi = trackArray(row, 8);    % angular velocity
 vi = (trackArray(row, 4)^2 + trackArray(row, 5)^2)^0.5; % need tangential velocity
 startingTime = trackArray(row, 1);   % starting time
 t = startingTime + t_inc;   %The first time value to be evaluated
+alphai = (trackArray(row, 9));
 
 % Initial energies
 syms theta;

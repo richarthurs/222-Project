@@ -37,11 +37,12 @@ global springStroke;    % grab the initial displacement of the spring launcher
 close all;
 figure
 rows = size(curveTestOut, 1);
-% <<<<<<< HEAD
-%  plot(curveTestOut(1:rows, 2), curveTestOut(1:rows, 3)); % grab a quick graph of position 
-%  axis([-0.05 0.3 -.35 0.1])
-%  hold on
-%  pause(5);
+
+figure
+ plot(curveTestOut(1:rows, 2), curveTestOut(1:rows, 3)); % grab a quick graph of position 
+ axis([-0.05 0.3 -.35 0.1])
+ hold on
+ pause(5);
  
 figure
 plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 4)); % grab a quick graph of position 
@@ -69,6 +70,7 @@ plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 7)); % grab a quick graph of 
 xlabel(['Time']);
 ylabel(['Y Accelereation']);
 
+figure
 subplot(3,2,1:4)    % make a subplot and put the position in it
 plot(curveTestOut(1:rows, 2), curveTestOut(1:rows,3))
 grid on
@@ -109,8 +111,10 @@ for n = 1:1:rows-1
     p3.YData = curveTestOut(n, 5);
     drawnow
    pause((curveTestOut(n+1, 1)-curveTestOut(n, 1)));
-   %display(n);
+
+ 
 end
 
 display('Time to complete track:')
 disp(curveTestOut(rows, 1))
+
