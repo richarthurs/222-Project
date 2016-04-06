@@ -27,12 +27,10 @@ while dist_travelled < Length
     CurPx = StartPx + dist_travelled;
     CurPy = StartPy;
     Vx = -Cur_AngVel*R;
-
     
     %Used force analysis with no friction to find ang acc and then
     %tangential and normal acceleration
     
-   
     Norm_Force = m*(-g);
     
     %Add to master array

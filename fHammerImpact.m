@@ -19,17 +19,19 @@ r = 0.01; % In metres, the radius of the cylindrical hammer head.
 
 [p, q] = size(data_old);
 data_new = data_old(p,:);
+timeInit=data_new(1,1) + t_inc;
+
 
 syms v_ball
 v_ball = vpasolve(v_ball == (mass_hammer/m)*d*sqrt(2*9.81/(.5*r^2+d^2))*(sqrt(2*d)-sqrt(h)));
 data_new(1,4) = v_ball; % Updates the data matrix with the x velocity. Note that the y velocity remains zero.
 data_new(1,8) = v_ball./R; % Updates the data matrix with the angular velocity. (Rolls without slipping)
-
 syms F_normal
 
 F_normal = m*g; % No acceleration in the y-direction, so the normal force is balanced by the weight.
 
 force_new = zeros(1,5);
+force_new(1,1) = timeInit;
 force_new(1,2) = F_normal; % Adds the initial normal force into the normal force column of the force matrix
 force_new = [force_old; force_new]; % add the old force data into the output force matrix
 % Time taken for the hammer to fall from top to bottom is approximately 0.5 seconds

@@ -71,9 +71,10 @@ for i = 1:(1/t_inc) % do 100 time steps (at t_inc = 0.01)
     %Add to master array
     New_Data = [t+time, x, y, vx, vy, ax, ay, -w, alpha];
     newForce = [t+time, normalForce, 0,centripetalForce,0];  % getting the normal force for the force matrix
-    trackArray = [trackArray; New_Data];
-    forceArray = [forceArray; newForce];
+   
     
 end
+ trackArray = [trackArray; New_Data];
+    forceArray = [forceArray; newForce];
 end
 

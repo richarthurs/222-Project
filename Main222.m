@@ -36,86 +36,84 @@ global springStroke;    % grab the initial displacement of the spring launcher
 [curveTestOut, curveTestForceOut] = Downhill_Slope_to_End(curveTestOut, curveTestForceOut, 0.3927, 0.25);  % roll down teeter-totter
 
 close all;
-figure
-rows = size(curveTestOut, 1);
+ rows = size(curveTestOut, 1);
+% 
+% figure
+%  plot(curveTestOut(1:rows, 2), curveTestOut(1:rows, 3)); % grab a quick graph of position 
+%  axis([-0.05 0.3 -.35 0.1])
+%  hold on
+%  pause(5);
+%  
+% figure
+% plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 4)); % grab a quick graph of position 
+% xlabel(['Time']);
+% ylabel(['X Velocity']);
+% hold on
+% 
+% figure 
+% plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 5)); % grab a quick graph of position 
+% xlabel(['Time']);
+% ylabel(['Y Velocity']);
+% 
+% figure 
+% plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 6)); % grab a quick graph of position 
+% xlabel(['Time']);
+% ylabel(['X Acceleration']);
+% 
+% figure 
+% plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 7)); % grab a quick graph of position 
+% xlabel(['Time']);
+% ylabel(['Y Accelereation']);
+% 
+% figure 
+% plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 7)); % grab a quick graph of position 
+% xlabel(['Time']);
+% ylabel(['Y Accelereation']);
+% 
+% figure
+% subplot(3,2,1:4)    % make a subplot and put the position in it
+% plot(curveTestOut(1:rows, 2), curveTestOut(1:rows,3))
+% grid on
+% title('Position of Center of Mass');
+% xlabel('Horizontal Position (m)');
+% ylabel('Vertical Position (m)');
+% hold on
+% p1=plot(curveTestOut(1:rows, 2), curveTestOut(1:rows,3),'Marker','o','MarkerFaceColor','r');    % this is the ball that will be animated
+% axis([-0.05 0.3 -.35 0.05]) % getting the axes set up 
+% 
+% subplot(3, 2, 5)    % subplot for x velocity
+% plot(curveTestOut(1:rows, 1), curveTestOut(1:rows,4))
+% grid on
+% title('X Velocity');
+% xlabel('Time (s)');
+% ylabel('Velocity (m/s)');
+% axis([0 3 -2 3.5])
+% hold on
+% p2=plot(curveTestOut(1:rows, 1), curveTestOut(1:rows,4),'Marker','o','MarkerFaceColor','r');
+% 
+% subplot(3, 2, 6)    % subplot for y velocity
+% plot(curveTestOut(1:rows, 1), curveTestOut(1:rows,5))
+% grid on
+% title('Y Velocity');
+% xlabel('Time (s)');
+% ylabel('Velocity (m/s)');
+% axis([0 3 -4 9])
+% hold on
+% p3=plot(curveTestOut(1:rows, 1), curveTestOut(1:rows,5),'Marker','o','MarkerFaceColor','r');
+% hold off
 
-figure
- plot(curveTestOut(1:rows, 2), curveTestOut(1:rows, 3)); % grab a quick graph of position 
- axis([-0.05 0.3 -.35 0.1])
- hold on
- pause(5);
- 
-figure
-plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 4)); % grab a quick graph of position 
-xlabel(['Time']);
-ylabel(['X Velocity']);
-hold on
-
-figure 
-plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 5)); % grab a quick graph of position 
-xlabel(['Time']);
-ylabel(['Y Velocity']);
-
-figure 
-plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 6)); % grab a quick graph of position 
-xlabel(['Time']);
-ylabel(['X Acceleration']);
-
-figure 
-plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 7)); % grab a quick graph of position 
-xlabel(['Time']);
-ylabel(['Y Accelereation']);
-
-figure 
-plot(curveTestOut(1:rows, 1), curveTestOut(1:rows, 7)); % grab a quick graph of position 
-xlabel(['Time']);
-ylabel(['Y Accelereation']);
-
-figure
-subplot(3,2,1:4)    % make a subplot and put the position in it
-plot(curveTestOut(1:rows, 2), curveTestOut(1:rows,3))
-grid on
-title('Position of Center of Mass');
-xlabel('Horizontal Position (m)');
-ylabel('Vertical Position (m)');
-hold on
-p1=plot(curveTestOut(1:rows, 2), curveTestOut(1:rows,3),'Marker','o','MarkerFaceColor','r');    % this is the ball that will be animated
-axis([-0.05 0.3 -.35 0.05]) % getting the axes set up 
-
-subplot(3, 2, 5)    % subplot for x velocity
-plot(curveTestOut(1:rows, 1), curveTestOut(1:rows,4))
-grid on
-title('X Velocity');
-xlabel('Time (s)');
-ylabel('Velocity (m/s)');
-axis([0 3 -2 3.5])
-hold on
-p2=plot(curveTestOut(1:rows, 1), curveTestOut(1:rows,4),'Marker','o','MarkerFaceColor','r');
-
-subplot(3, 2, 6)    % subplot for y velocity
-plot(curveTestOut(1:rows, 1), curveTestOut(1:rows,5))
-grid on
-title('Y Velocity');
-xlabel('Time (s)');
-ylabel('Velocity (m/s)');
-axis([0 3 -4 9])
-hold on
-p3=plot(curveTestOut(1:rows, 1), curveTestOut(1:rows,5),'Marker','o','MarkerFaceColor','r');
-hold off
-
-for n = 1:1:rows-1
-    p1.XData = curveTestOut(n, 2);  % update the x and Y data of the p1, p2, p3 plots in the subplot
-    p1.YData = curveTestOut(n, 3);
-     p2.XData = curveTestOut(n, 1);
-    p2.YData = curveTestOut(n, 4);
-     p3.XData = curveTestOut(n, 1);
-    p3.YData = curveTestOut(n, 5);
-    drawnow
-   pause((curveTestOut(n+1, 1)-curveTestOut(n, 1)));
-
-end
+% for n = 1:1:rows-1
+%     p1.XData = curveTestOut(n, 2);  % update the x and Y data of the p1, p2, p3 plots in the subplot
+%     p1.YData = curveTestOut(n, 3);
+%      p2.XData = curveTestOut(n, 1);
+%     p2.YData = curveTestOut(n, 4);
+%      p3.XData = curveTestOut(n, 1);
+%     p3.YData = curveTestOut(n, 5);
+%     drawnow
+%    pause((curveTestOut(n+1, 1)-curveTestOut(n, 1)));
+% 
+% end
 
 display('Time to complete track:')
 disp(curveTestOut(rows, 1))
 
-figure;

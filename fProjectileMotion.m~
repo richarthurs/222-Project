@@ -1,4 +1,4 @@
-function [data_new, force_new] = ProjectileMotion(data_old, forceOld)
+function [data_new, forceNew] = ProjectileMotion(data_old, forceOld)
 % The required global variables are initialized in the fSystemInit function
 
 global R; % Radius of ball
@@ -69,10 +69,11 @@ for t=t_inc:t_inc:2  % If we start at 0 instead of t_inc, then we'll duplicate t
  data_current(1,5) = v_y; % Update the y velocity of the ball, x velocity remains constant
 
  currentForce(1,1) = data_current(1,1);
- currentForce(1,5) = m*g;
+ currentForce(1,5) = 
+ currentForce = [data_current(1,1) + t_inc, 0,0,0,m*g];
  
  data_new = [data_new; data_current];
-force_new = [force_new; currentForce];
+forceNew = [force_new; currentForce];
 end
 
 %  figure

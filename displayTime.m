@@ -9,9 +9,9 @@ xlabel('Horizontal Position (m)');
 ylabel('Vertical Position (m)');
 hold on
 
-x = 1;
+x = 500;
 while dataArray(x, 1) < time
-    x = x+1;
+    x = x+1
 end
 
 
